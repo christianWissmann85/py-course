@@ -1,8 +1,6 @@
 # Python Mastery Bootcamp: From Zero to L3/L4 Engineering Proficiency
 
-## A Modern, Type-Safe, Production-Ready Python Course
-
----
+_A Modern, Type-Safe, Production-Ready Python Course_
 
 ## 🎯 Course Mission Statement
 
@@ -34,9 +32,9 @@ This bootcamp transforms students into professional Python developers capable of
 
 ---
 
-## 📈 Learning Path (36 Weeks)
+## 📈 Learning Path
 
-### Phase 0: Environment Setup (Week 0)
+### Phase 0: Environment Setup
 
 - Ubuntu/WSL2 setup
 - PyEnv installation and configuration
@@ -50,7 +48,6 @@ This bootcamp transforms students into professional Python developers capable of
 **Goal**: Strong Python basics with modern practices
 
 #### Week 1-2: Python Fundamentals
-
 - Variables and type annotations
 - Basic data types with typing
 - Control flow with type safety
@@ -58,7 +55,6 @@ This bootcamp transforms students into professional Python developers capable of
 - Input/output and string formatting
 
 #### Week 3-4: Data Structures & Algorithms
-
 - Lists, tuples, sets with generics
 - Dictionaries and TypedDict
 - List comprehensions with types
@@ -66,7 +62,6 @@ This bootcamp transforms students into professional Python developers capable of
 - Common algorithms implementation
 
 #### Week 5-6: Functions & Modules
-
 - Advanced function concepts
 - Decorators from scratch
 - Generators and iterators
@@ -74,7 +69,6 @@ This bootcamp transforms students into professional Python developers capable of
 - Creating pip-installable packages
 
 #### Week 7-8: Error Handling & Testing
-
 - Exception hierarchy
 - Custom exceptions
 - Logging best practices
@@ -89,7 +83,6 @@ This bootcamp transforms students into professional Python developers capable of
 **Goal**: Professional Python development skills
 
 #### Week 9-10: Object-Oriented Programming
-
 - Classes with dataclasses
 - Inheritance and composition
 - Abstract base classes
@@ -97,7 +90,6 @@ This bootcamp transforms students into professional Python developers capable of
 - SOLID principles
 
 #### Week 11-12: Functional Programming
-
 - First-class functions
 - Higher-order functions
 - functools mastery
@@ -105,7 +97,6 @@ This bootcamp transforms students into professional Python developers capable of
 - Monads in Python
 
 #### Week 13-14: Concurrency & Parallelism
-
 - Threading vs multiprocessing
 - async/await fundamentals
 - asyncio deep dive
@@ -113,7 +104,6 @@ This bootcamp transforms students into professional Python developers capable of
 - Race conditions and locks
 
 #### Week 15-16: Files, Network & Databases
-
 - File I/O with context managers
 - JSON, CSV, XML processing
 - HTTP clients and servers
@@ -126,113 +116,171 @@ This bootcamp transforms students into professional Python developers capable of
 
 **Goal**: Advanced developer capabilities
 
-#### Week 17-18: Advanced Python Features
-
-- Metaclasses
-- Descriptors
+#### Week 17: Advanced Python Features
 - Context managers (advanced)
+- Decorators (parametrized, class)
 - Dynamic code generation
-- Introspection and reflection
+- Introspection & reflection
+- Import system & plugins
 
-#### Week 19-20: Performance & Optimization
+#### Week 18: Design Patterns
+- Creational patterns (Factory, Builder, Singleton)
+- Structural patterns (Adapter, Decorator, Facade)
+- Behavioral patterns (Observer, Strategy, Command)
+- Architectural patterns (MVC, Repository, CQRS)
+- Python-specific patterns (Borg, Mixins)
 
-- Profiling tools
-- Memory management
-- Cython basics
-- NumPy for performance
-- Algorithmic optimization
-
-#### Week 21-22: Design Patterns & Architecture
-
-- Gang of Four patterns
-- Python-specific patterns
-- Clean architecture
-- Domain-driven design
+#### Week 19: System Design & Architecture
+- Clean architecture principles
+- Domain-driven design (DDD)
+- Microservices architecture
 - Event-driven architecture
+- Scalability patterns
 
-#### Week 23-24: DevOps & Production
-
-- Docker containerization
-- CI/CD with GitHub Actions
-- Monitoring and logging
-- Configuration management
+#### Week 20: Security & Cryptography
+- Security fundamentals & OWASP Top 10
+- Authentication & authorization (JWT, OAuth)
+- Cryptography basics
+- Input validation & sanitization
 - Security best practices
 
-**Capstone**: FastAPI microservice with full DevOps
+#### Week 21: DevOps & Deployment
+- Docker fundamentals & multi-stage builds
+- CI/CD with GitHub Actions
+- Infrastructure as Code (Terraform)
+- Monitoring & observability (Prometheus, Grafana)
+- Kubernetes basics
 
-### Phase 4: Backend (Weeks 25-36)
+#### Week 22: Testing Strategies
+- Advanced pytest (fixtures, mocking, parametrization)
+- Integration testing with testcontainers
+- End-to-end testing (Playwright)
+- Property-based testing (Hypothesis)
+- Performance testing (Locust)
 
-**Goal**: Domain expertise
+#### Week 23: Code Quality & Documentation
+- Code review best practices
+- Documentation strategies (Sphinx)
+- Code metrics & analysis
+- Refactoring techniques
+- Technical debt management
 
-#### Backend Development
+#### Week 24: Real-World Projects
+- FastAPI microservice implementation
+- ETL pipeline development
+- Portfolio review & optimization
 
-- FastAPI mastery
+**Capstone**: Production-ready FastAPI microservice with full DevOps
+
+### Phase 4: Backend Engineering (Weeks 25-28)
+
+**Goal**: Backend mastery and microservices expertise
+
+#### Week 25: Advanced FastAPI
 - GraphQL with Strawberry
-- Message queues (Redis, RabbitMQ)
-- Microservices patterns
-- API versioning and documentation
-- Authentication and authorization
+- gRPC & Protocol Buffers
+- Message queues (RabbitMQ, Kafka)
+- API Gateway patterns
+- Service mesh concepts
 
-### Phase 5: ML/AI Engineering (Weeks 36-47)
+#### Week 26: Microservices Architecture
+- Service boundaries & decomposition
+- Inter-service communication
+- Data management & CQRS
+- Observability & distributed tracing
+- Container orchestration
 
-- NumPy and Pandas mastery
-- PyTorch fundamentals
-- Neural network basics
-- Training pipelines
-- Model deployment
-- MLOps practices
+#### Week 27: Cloud Native Development
+- AWS services (Lambda, DynamoDB, S3)
+- Google Cloud Platform (Cloud Functions, Firestore)
+- Infrastructure as Code (Terraform)
+- Serverless architecture
+- Cloud security best practices
 
-### Phase 6: Integration & Mastery
+#### Week 28: Backend Capstone
+- Complete backend platform
+- 5+ microservices
+- Event-driven architecture
+- Full observability stack
 
-- Combining backend with ML
-- Production ML systems
-- Real-time inference APIs
-- Data pipelines
-- Scalability patterns
-- System design
-- TUI/CLI Client
+**Capstone**: Production backend platform with GraphQL federation
 
-**Final Project**: Full-stack ML application
+### Phase 5: Machine Learning Engineering (Weeks 29-32)
+
+**Goal**: ML/AI engineering proficiency
+
+#### Week 29: NumPy & Pandas Mastery
+- Advanced array operations & broadcasting
+- Time series analysis
+- Data processing pipelines
+- Statistical computing
+- Interactive visualizations (Plotly)
+
+#### Week 30: Machine Learning Fundamentals
+- Scikit-learn pipelines
+- Feature engineering
+- Model evaluation & interpretability
+- Ensemble methods
+- Time series forecasting & anomaly detection
+
+#### Week 31: Deep Learning with PyTorch
+- Neural network fundamentals
+- Convolutional Neural Networks (CNNs)
+- Recurrent Neural Networks (RNNs/LSTMs)
+- Transformers & attention mechanisms
+- GANs & VAEs
+
+#### Week 32: MLOps & Production ML
+- Model training pipelines (MLflow)
+- Model deployment & serving
+- Model monitoring & drift detection
+- Model optimization (quantization, pruning)
+- ML infrastructure (feature stores, model registry)
+
+**Capstone**: End-to-end ML system with deployment
+
+### Phase 6: Graduation Project - PyForge (Weeks 33-36)
+
+**Goal**: Integrate all skills in a production-ready platform
+
+#### PyForge: AI-Enhanced Development Platform
+
+A comprehensive development platform showcasing mastery of all course concepts:
+
+**Week 33: Foundation & Infrastructure**
+- System architecture design
+- Database schema & message queue setup
+- Docker & Kubernetes configuration
+- CI/CD pipeline initialization
+
+**Week 34: Core Services Implementation**
+- API Gateway with FastAPI
+- Authentication & authorization system
+- Analysis Service (code quality metrics)
+- Project Service (management & collaboration)
+- ML Service integration
+
+**Week 35: Advanced Features**
+- CLI/TUI Dashboard with Textual
+- Real-time WebSocket features
+- ML-powered code analysis
+- Performance optimization
+- Integration testing
+
+**Week 36: Production Deployment**
+- Security hardening
+- Load testing & optimization
+- Documentation completion
+- Demo preparation & presentation
+
+**Final Deliverables**:
+- Production-ready codebase (90%+ test coverage)
+- Microservices architecture (5+ services)
+- ML features (quality prediction, refactoring suggestions)
+- Full observability (metrics, logs, traces)
+- Complete documentation & deployment guides
 
 ---
-
-## 📝 Exercise Format
-
-Each exercise follows this structure:
-
-```markdown
-# Exercise: [Name]
-
-## Learning Objectives
-
-- [ ] Objective 1
-- [ ] Objective 2
-
-## Requirements
-
-- MyPy: --strict must pass
-- Ruff: All checks must pass
-- Tests: 100% coverage required
-
-## Task
-
-[Clear description]
-
-## Skeleton Code
-
-[Starting point - student must type this]
-
-## Test Cases
-
-[pytest tests that must pass]
-
-## Definition of Done
-
-- [ ] All tests pass
-- [ ] MyPy --strict passes
-- [ ] Ruff passes
-- [ ] Code is documented
-```
 
 ## 🔧 Development Environment
 
@@ -321,6 +369,8 @@ addopts = "--cov --cov-report=term-missing"
 
 ### First Exercise
 
+_Just type it by hand, no need to understand any of it now._
+
 ```python
 # exercises/foundations/hello_typed.py
 def greet(name: str) -> str:
@@ -396,10 +446,12 @@ We adopt a **"Practical-First with Academic Rigor"** approach:
 
 ### Portfolio Projects
 
-- [ ] CLI tool on PyPI
-- [ ] TUI application
-- [ ] Production API
-- [ ] ML pipeline
+- [ ] CLI tool on PyPI (Phase 1 Capstone)
+- [ ] Rich/Textual TUI application (Phase 2 Capstone)
+- [ ] Production FastAPI microservice (Phase 3 Capstone)
+- [ ] Backend platform with 5+ microservices (Phase 4 Capstone)
+- [ ] End-to-end ML system (Phase 5 Capstone)
+- [ ] PyForge: AI-Enhanced Development Platform (Graduation Project)
 - [ ] Open source contributions
 
 ---
@@ -414,7 +466,7 @@ This course prepares you for the future of development where:
 - You can debug AI mistakes
 - You can architect systems AI implements
 
-Remember: **The goal isn't to type faster than AI, but to think better than AI.**
+Remember: **The goal isn't to type faster than AI, but to be able to work better with AI, and not become fully dependent.**
 
 ---
 
@@ -443,11 +495,11 @@ Remember: **The goal isn't to type faster than AI, but to think better than AI.*
 2. Set up your environment (Week 0)
 3. Begin with `course-book/00-foundations/week-01/`
 4. Type every example in `exercises/`
-5. Ask Claude Code to verify your work
+5. Ask Claude Code/Github Copilot to verify your work
 6. Track progress in assessments
 
 ---
 
-_Last Updated: [Date]_
-_Version: 1.0.0_
+_Last Updated: 2025-09-03_
+_Version: 2.0.0_
 _Student #000001: Chris_

@@ -55,58 +55,89 @@ poetry run ruff --version
 ```
 py-course/
 ├── PYTHON_COURSE.md     # Master course document
-├── CLAUDE.md           # AI assistant instructions
+├── README.md
 │
-├── course-book/             # Course content (READ)
+├── course-book/             # Course content
 │   ├── 00-foundations/
 │   ├── 01-intermediate/
 │   ├── 02-advanced/
 │   ├── 03-backend/
 │   ├── 04-ml-ai/
-│   └── bonus/
+│   └── 05-graduation-project/
 │
-├── exercises/         # Additional Exercises (READ)
-├── projects/          # Major projects (READ)
-├── assessments/       # Self-evaluation (READ)
-├── student/           # Place your files here (WRITE)
-└── resources/         # Reference materials
+└── exercises/         # Additional Exercises
 ```
 
 ## 📈 Course Phases
 
 ### Phase 1: Foundations (Weeks 1-8)
-
-- Python basics with type hints
-- Data structures & algorithms
-- Functions & OOP basics
-- Testing & error handling
+- **Week 1-2**: Python fundamentals with type hints
+- **Week 3-4**: Data structures & algorithms  
+- **Week 5-6**: Functions, modules & packages
+- **Week 7-8**: Error handling & testing with pytest
+- **Capstone**: CLI tool with full test suite
 
 ### Phase 2: Intermediate (Weeks 9-16)
-
-- Advanced OOP & functional programming
-- Async programming
-- Concurrency & parallelism
-- Databases & networking
+- **Week 9-10**: Object-oriented programming & SOLID principles
+- **Week 11-12**: Functional programming patterns
+- **Week 13-14**: Concurrency & async programming
+- **Week 15-16**: Files, networking & databases
+- **Capstone**: Rich/Textual TUI application
 
 ### Phase 3: Advanced (Weeks 17-24)
+- **Week 17**: Advanced Python features (context managers, decorators, introspection)
+- **Week 18**: Design patterns (GoF, Python-specific)
+- **Week 19**: System design & architecture (Clean, DDD, microservices)
+- **Week 20**: Security & cryptography
+- **Week 21**: DevOps & deployment (Docker, K8s, CI/CD)
+- **Week 22**: Testing strategies (unit, integration, E2E, property-based)
+- **Week 23**: Code quality & documentation
+- **Week 24**: Real-world projects
+- **Capstone**: FastAPI microservice with full DevOps
 
-- Design patterns
-- System architecture
-- Security & DevOps
-- Performance optimization
+### Phase 4: Backend Engineering (Weeks 25-28)
+- **Week 25**: Advanced FastAPI (GraphQL, gRPC, message queues)
+- **Week 26**: Microservices architecture
+- **Week 27**: Cloud native development (AWS, GCP, Terraform)
+- **Week 28**: Backend capstone project
+- **Capstone**: Production backend platform with 5+ microservices
 
-### Phase 4: Backend Engineering (FastAPI, microservices)
+### Phase 5: Machine Learning Engineering (Weeks 29-32)
+- **Week 29**: NumPy & Pandas mastery
+- **Week 30**: Machine learning fundamentals (scikit-learn)
+- **Week 31**: Deep learning with PyTorch
+- **Week 32**: MLOps & production ML
+- **Capstone**: End-to-end ML system with deployment
 
-### Phase 5: Machine Learning (PyTorch, MLOps)
+### Phase 6: Graduation Project - PyForge (Weeks 33-36)
+**AI-Enhanced Development Platform** integrating all learned concepts:
+- **Week 33**: Foundation & infrastructure setup
+- **Week 34**: Core services implementation
+- **Week 35**: Advanced features & ML integration
+- **Week 36**: Production deployment & presentation
 
-- Integration & mastery
+## 🎓 Graduation Project: PyForge Platform
 
-## 🎓 What You'll Build
+A comprehensive development platform showcasing mastery of:
 
-1. **CLI Toolkit** - Command-line application suite
-2. **TUI Dashboard** - Terminal UI with Rich/Textual
-3. **API Backend** - Production FastAPI service
-4. **ML Pipeline** - Complete machine learning system
+### Core Components:
+1. **CLI/TUI Dashboard** - Rich/Textual interface for project management
+2. **API Gateway** - FastAPI with authentication, rate limiting, routing
+3. **Microservices**:
+   - Analysis Service (code quality metrics)
+   - ML Service (predictions & suggestions)
+   - Project Service (management & collaboration)
+   - Notification Service (multi-channel alerts)
+4. **ML Features**:
+   - Code quality prediction
+   - Automated refactoring suggestions
+   - Bug detection using NLP
+   - Performance optimization hints
+5. **Infrastructure**:
+   - Docker containerization
+   - Kubernetes orchestration
+   - CI/CD with GitHub Actions
+   - Full observability (metrics, logs, traces)
 
 ## 🛠️ Technology Stack
 
