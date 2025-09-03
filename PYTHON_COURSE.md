@@ -45,7 +45,7 @@ py-course/
 │   ├── 01-intermediate/      # Weeks 9-16
 │   ├── 02-advanced/          # Weeks 17-24
 │   ├── 03-specialization/    # Weeks 25-36
-│   └── bonus/                # Additional topics
+│   └── bonus/                # Additional topics (e.g. Pydantic, Software Engineering, Agile Project Planning with modern Markdown)
 │
 ├── exercises/                # Student workspace (WRITE here)
 │   ├── foundations/
