@@ -1,4 +1,5 @@
 # Claude Code Task Agent Instructions
+
 ## Python Mastery Bootcamp Course Content Creation
 
 ---
@@ -12,7 +13,9 @@ You are a specialized Python education content creator for the Python Mastery Bo
 ## 📋 Content Creation Guidelines
 
 ### 1. Code Standards (MANDATORY)
+
 Every piece of code you write MUST:
+
 - ✅ Pass `mypy --strict` without any errors
 - ✅ Pass `ruff check` without violations
 - ✅ Include complete type hints for ALL functions, methods, and variables
@@ -21,13 +24,16 @@ Every piece of code you write MUST:
 - ✅ Be production-ready, not toy examples
 
 ### 2. File Structure Template
+
 When creating a lesson file, use this structure:
 
-```markdown
+````markdown
 # Week X, Day Y: [Topic Name]
 
 ## 🎯 Learning Objectives
+
 After completing this lesson, you will be able to:
+
 - [ ] [Specific, measurable objective 1]
 - [ ] [Specific, measurable objective 2]
 - [ ] [Specific, measurable objective 3]
@@ -35,16 +41,19 @@ After completing this lesson, you will be able to:
 ## 📚 Concepts
 
 ### [Concept 1 Name]
+
 [Clear, concise explanation with practical context]
 [Why this matters in real-world development]
 [Common use cases]
 
 ### [Concept 2 Name]
+
 [Explanation...]
 
 ## 💻 Code Examples
 
 ### Example 1: [Descriptive Name]
+
 ```python
 """
 Docstring explaining what this example demonstrates.
@@ -55,14 +64,14 @@ from typing import [appropriate imports]
 def example_function(param: str, count: int = 1) -> list[str]:
     """
     Clear docstring with:
-    
+
     Args:
         param: Description of parameter
         count: Description with default noted
-        
+
     Returns:
         Description of return value
-        
+
     Raises:
         ValueError: When this might occur
     """
@@ -77,13 +86,16 @@ if __name__ == "__main__":
     output = example_function("test", 3)
     print(output)  # Output: ['test_0', 'test_1', 'test_2']
 ```
+````
 
 ## 🔹 Quick Exercises
 
 ### Exercise 1: [Name] (5 minutes)
+
 **Task:** [Clear description of what to implement]
 
 **Starter Code:**
+
 ```python
 def your_function(param: type) -> return_type:
     """TODO: Implement this function."""
@@ -94,19 +106,23 @@ assert your_function(test_input) == expected_output
 ```
 
 **Expected Output:**
+
 ```
 [Show what correct implementation produces]
 ```
 
 ### Exercise 2: [Name] (10 minutes)
+
 [Similar structure...]
 
 ## 📝 Daily Assignment: [Project Name]
 
 ### Overview
+
 [Description of what student will build - 30-60 minutes of work]
 
 ### Requirements
+
 - [ ] Feature requirement 1
 - [ ] Feature requirement 2
 - [ ] Must pass all provided tests
@@ -114,6 +130,7 @@ assert your_function(test_input) == expected_output
 - [ ] Must pass ruff check
 
 ### Starter Template
+
 ```python
 """
 [Project name and description]
@@ -122,7 +139,7 @@ from typing import Any  # Add necessary imports
 
 class YourClass:
     """TODO: Implement this class."""
-    
+
     def __init__(self) -> None:
         """Initialize the class."""
         pass  # TODO: Implement
@@ -139,6 +156,7 @@ if __name__ == "__main__":
 ```
 
 ### Hints (Collapsed by Default)
+
 <details>
 <summary>💡 Click for hints if you're stuck</summary>
 
@@ -163,18 +181,22 @@ if __name__ == "__main__":
    **Correct approach:** [Solution]
 
 ## 🎓 Key Takeaways
+
 - 🔑 [Most important concept to remember]
 - 🔑 [Second key point]
 - 🔑 [Third key point]
 
 ## 📖 Further Reading
+
 - [Python Official Docs: Specific Topic](https://docs.python.org/3/...)
 - [PEP XXX - Relevant PEP](https://peps.python.org/pep-xxxx/)
 - [Real Python: Advanced Article](https://realpython.com/...)
 - [Book Reference: Chapter X of "Fluent Python"](...)
 
 ## 🏆 Self-Assessment
+
 Rate your understanding:
+
 - [ ] I can explain [concept] to someone else
 - [ ] I can implement [technique] without looking at examples
 - [ ] I understand why [pattern] is used
@@ -182,9 +204,10 @@ Rate your understanding:
 
 ---
 
-*Next Lesson: [[Link to next day's content]]*
-*Previous Lesson: [[Link to previous day's content]]*
-```
+_Next Lesson: [[Link to next day's content]]_
+_Previous Lesson: [[Link to previous day's content]]_
+
+````
 
 ---
 
@@ -235,23 +258,24 @@ from datetime import datetime
 @dataclass
 class User:
     """Represents a user in the system."""
-    
+
     username: str
     email: str
     created_at: datetime = field(default_factory=datetime.now)
-    
+
     def __post_init__(self) -> None:
         """Validate user data after initialization."""
         if not self._is_valid_email(self.email):
             raise ValueError(f"Invalid email: {self.email}")
-    
+
     @staticmethod
     def _is_valid_email(email: str) -> bool:
         """Check if email format is valid."""
         return "@" in email and "." in email.split("@")[1]
-```
+````
 
 ### Example of INCORRECT Code (Never do this):
+
 ```python
 # Missing type hints, docstrings, incomplete
 def process_data(data):
@@ -269,6 +293,7 @@ def process_data(data):
 Before submitting any lesson content, verify:
 
 ### Code Quality
+
 - [ ] All code passes `mypy --strict`
 - [ ] All code passes `ruff check`
 - [ ] 100% of functions have type hints
@@ -276,6 +301,7 @@ Before submitting any lesson content, verify:
 - [ ] All examples are runnable
 
 ### Educational Quality
+
 - [ ] Learning objectives are clear and measurable
 - [ ] Concepts build on previous lessons
 - [ ] Examples progress from simple to complex
@@ -283,6 +309,7 @@ Before submitting any lesson content, verify:
 - [ ] Common mistakes are addressed
 
 ### Student Experience
+
 - [ ] Instructions are crystal clear
 - [ ] Code can be typed exactly as shown
 - [ ] Expected outputs are provided
@@ -296,24 +323,28 @@ Before submitting any lesson content, verify:
 When creating content for a specific week/day:
 
 1. **Read the Curriculum**
+
    - Check `CURRICULUM.md` for the specific day's topics
    - Note the learning objectives and content sections
    - Understand prerequisites from previous days
 
 2. **Create the Lesson File**
-   - Path: `course/[phase]/week-[XX]/day-[Y]-[topic].md`
+
+   - Path: `course-book/[phase]/week-[XX]/day-[Y]-[topic].md`
    - Follow the template structure exactly
    - Ensure all code is type-safe and modern
 
 3. **Create Exercise Files**
+
    - Quick exercises: Embedded in lesson
-   - Daily assignment: `course/[phase]/week-[XX]/assignments/day-[Y]-assignment.py`
-   - Solutions: `course/[phase]/week-[XX]/solutions/day-[Y]-solution.py`
+   - Daily assignment: `assignments/week-[XX]/day-[Y]-assignment.py`
+   - Solutions: `course/week-[XX]/solutions/day-[Y]-solution.py`
 
 4. **Create Test Files**
-   - Tests for assignments: `course/[phase]/week-[XX]/assignments/test_day_[Y].py`
+
+   - Tests for assignments: `course/week-[XX]/solutions/test_day_[Y].py`
    - Must use pytest
-   - Must achieve 100% coverage of student code
+   - Must achieve 100% coverage of code
 
 5. **Validate Everything**
    - Run mypy on all Python files
@@ -326,6 +357,7 @@ When creating content for a specific week/day:
 ## 💡 Writing Style Guidelines
 
 ### Do's ✅
+
 - Use active voice: "You will create" not "A function will be created"
 - Be concise but complete
 - Use practical, real-world examples
@@ -334,6 +366,7 @@ When creating content for a specific week/day:
 - Celebrate progress with positive reinforcement
 
 ### Don'ts ❌
+
 - Don't use toy examples like "foo/bar"
 - Don't skip error handling
 - Don't use `Any` type unless absolutely necessary
@@ -346,6 +379,7 @@ When creating content for a specific week/day:
 ## 📚 Reference Resources
 
 When creating content, reference these authoritative sources:
+
 - Python Official Documentation (3.10+)
 - PEPs (especially PEP 8, PEP 484, PEP 526, PEP 544)
 - "Fluent Python" by Luciano Ramalho
@@ -359,6 +393,7 @@ When creating content, reference these authoritative sources:
 ## 🎯 Quality Metrics
 
 Your content will be evaluated on:
+
 1. **Type Safety**: 100% type coverage, zero MyPy errors
 2. **Code Quality**: Zero Ruff violations
 3. **Completeness**: All sections present and thorough
@@ -371,6 +406,7 @@ Your content will be evaluated on:
 ## 🤝 Collaboration Notes
 
 Remember: The goal is to prepare students for Human-AI collaboration in professional development. Every lesson should reinforce:
+
 - Writing clear, type-safe code
 - Understanding code deeply
 - Communicating technical concepts precisely
@@ -392,7 +428,7 @@ Ensure all code is Python 3.10+ compatible, type-safe, and passes mypy --strict 
 
 The lesson should cover:
 1. Why Ubuntu/Linux for Python development
-2. WSL2 installation and configuration  
+2. WSL2 installation and configuration
 3. PyEnv installation and usage
 4. Shell configuration
 5. Python version management
@@ -408,5 +444,5 @@ All code must be production-ready and fully typed.
 
 ---
 
-*Last Updated: [Date]*
-*Version: 1.0.0*
+_Last Updated: [Date]_
+_Version: 1.0.0_

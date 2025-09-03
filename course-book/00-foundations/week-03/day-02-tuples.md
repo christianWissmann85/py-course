@@ -1,6 +1,7 @@
 # Week 3, Day 2: Tuples & NamedTuples
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the immutable nature of tuples and how it differs from lists.
 - [ ] Use tuple unpacking for elegant multiple variable assignments.
 - [ ] Create simple, immutable data structures using `typing.NamedTuple`.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. Tuple Basics and Immutability
+
 A tuple is an ordered, **immutable** collection of items. You create tuples using parentheses `()`. Their main characteristic is that once a tuple is created, you cannot change, add, or remove items.
 
 ```python
@@ -21,9 +23,11 @@ name: str = my_tuple[0]  # "Alice"
 # But you CANNOT modify it
 # my_tuple[1] = 31  # This will raise a TypeError!
 ```
+
 The type hint for a tuple can specify the type of each element in order, like `tuple[str, int, float]`. For a tuple with a variable number of items of the same type, you use `tuple[int, ...]`.
 
 ### 2. Tuple Unpacking
+
 Tuple unpacking is a very Pythonic feature that allows you to assign the items of a tuple to multiple variables in a single line.
 
 ```python
@@ -35,9 +39,11 @@ name, age, is_active = user_data
 print(f"Name: {name}, Age: {age}, Active: {is_active}")
 # Output: Name: Bob, Age: 42, Active: True
 ```
+
 This is commonly used to return multiple values from a function.
 
 ### 3. `typing.NamedTuple`
+
 A regular tuple is great, but accessing items by index (`user_data[0]`) can be unreadable. A `NamedTuple` solves this by giving names to each position. It's a factory function that creates a new, simple, immutable class.
 
 ```python
@@ -57,9 +63,11 @@ print(f"Coordinates: ({p1.x}, {p1.y})") # Output: Coordinates: (10.5, 20.0)
 # You can still access by index if you want
 assert p1[0] == 10.5
 ```
+
 `NamedTuple` gives you the best of both worlds: the immutability and light weight of a tuple, with the readability of an object with named attributes.
 
 ### 4. Use Cases for Tuples
+
 - **Returning multiple values from functions**: `return name, age` implicitly returns a tuple.
 - **Data that shouldn't change**: Use a tuple for a collection of items that represents a single, fixed entity, like a point `(x, y)` or an RGB color `(r, g, b)`.
 - **Dictionary keys**: Since tuples are immutable, they can be used as keys in a dictionary, whereas lists cannot.
@@ -69,6 +77,7 @@ assert p1[0] == 10.5
   ```
 
 ### 5. Performance Benefits
+
 Tuples are generally slightly more memory-efficient and faster to create than lists. This is because Python can make certain optimizations knowing that the tuple's size and contents will not change. While you shouldn't choose a tuple over a list for minor performance gains, it's a nice bonus in performance-critical code where you are creating many small collections.
 
 ## 🔹 Quick Exercise
@@ -104,6 +113,7 @@ assert math.isclose(distance(p3, p4), 13.0)
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a simple coordinate geometry system using `NamedTuple`.
 
 1.  **Create Project File**: In `my-first-poetry-app`, create a new file: `my_first_poetry_app/geometry.py`.
@@ -121,6 +131,7 @@ assert math.isclose(distance(p3, p4), 13.0)
 5.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Trying to modify a tuple**: `my_tuple[0] = 5` will always fail. If you need to "change" a tuple, you must create a new one.
 - **Forgetting the comma for a single-item tuple**: `(1)` is just the number 1 in parentheses. To create a tuple with one item, you need a trailing comma: `(1,)`.
   ```python
@@ -130,6 +141,7 @@ assert math.isclose(distance(p3, p4), 13.0)
 - **Using `NamedTuple` like a full class**: `NamedTuple` is for creating simple, immutable data containers. It's not designed for complex methods or state changes. If you need that, you should use a `dataclass` (Week 5) or a regular `class`.
 
 ## 📖 Further Reading
+
 - [Real Python: Python Tuples](https://realpython.com/python-lists-tuples/#python-tuples)
 - [Python Docs: `typing.NamedTuple`](https://docs.python.org/3/library/typing.html#typing.NamedTuple)
 - [Python Docs: Unpacking Argument Lists](https://docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists)

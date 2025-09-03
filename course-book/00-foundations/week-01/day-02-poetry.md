@@ -1,6 +1,7 @@
 # Week 1, Day 2: Poetry & Dependency Management
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the core problems of dependency management in Python.
 - [ ] Master essential Poetry commands for project initialization and dependency management.
 - [ ] Create your first project managed by Poetry from scratch.
@@ -9,21 +10,26 @@
 ## 📚 Concepts
 
 ### 1. Why Poetry over pip/venv?
+
 Traditional Python dependency management involves using `pip` to install packages and `venv` to create isolated environments. This often leads to a `requirements.txt` file that doesn't lock down sub-dependencies, causing the "it works on my machine" problem.
 
 Poetry is a modern, all-in-one tool that solves these issues by:
+
 - **Combining virtual environment and package management**: No more separate `venv` and `pip` commands.
 - **Deterministic builds**: Poetry uses a `poetry.lock` file to ensure that the exact same versions of all dependencies (and their dependencies) are installed every time.
 - **Clear dependency separation**: It distinguishes between main dependencies and development-only dependencies (like `pytest` or `mypy`).
 - **Standardized configuration**: It uses the official `pyproject.toml` file, which is the new standard for configuring Python projects.
 
 ### 2. Poetry Installation and Configuration
+
 Poetry is installed separately from your Python projects. It's a command-line tool that manages your projects for you. The official installer is recommended to avoid conflicts with other Python tools.
 
 ### 3. Creating New Projects
+
 `poetry new <project_name>` scaffolds a new project with a sensible directory structure, a `pyproject.toml`, and a `README`. `poetry init` can be used to start using Poetry in an existing project.
 
 ### 4. Managing Dependencies
+
 - `poetry add <package>`: Adds a dependency to your project and installs it.
 - `poetry add <package> --group dev`: Adds a development-only dependency.
 - `poetry remove <package>`: Removes a dependency.
@@ -31,11 +37,13 @@ Poetry is installed separately from your Python projects. It's a command-line to
 - `poetry update`: Updates dependencies to the latest allowed versions and regenerates the lock file.
 
 ### 5. Virtual Environments with Poetry
+
 Poetry automatically creates and manages a virtual environment for each of your projects. You don't need to create or activate it manually. To run a script within the project's virtual environment, you use `poetry run <command>`. For example, `poetry run python my_script.py`.
 
 ## 💻 Code Examples
 
 ### Creating a New Poetry Project
+
 ```bash
 # This creates a new directory called 'my-awesome-project'
 poetry new my-awesome-project
@@ -49,6 +57,7 @@ ls
 ```
 
 ### The `pyproject.toml` file
+
 This file is the heart of your project's configuration.
 
 ```toml
@@ -71,6 +80,7 @@ build-backend = "poetry.core.masonry.api"
 ```
 
 ### Adding and Running Dependencies
+
 ```bash
 # Add the popular 'requests' library as a dependency
 poetry add requests
@@ -119,15 +129,15 @@ poetry run python my_awesome_project/main.py
 
 ## ⚠️ Common Mistakes
 
--   **Forgetting `poetry run`**: Running `python my_script.py` directly will use your global Python, not the project's virtual environment where your dependencies are installed. This leads to `ModuleNotFoundError`. Always use `poetry run`.
--   **Manually editing `poetry.lock`**: The lock file is meant to be machine-generated. Never edit it by hand. Use `poetry add/remove/update` to manage it.
--   **Committing without the lock file**: The `poetry.lock` file is essential for reproducible builds. It **must** be committed to your version control (e.g., Git).
--   **Confusing `poetry install` and `poetry update`**:
-    - `poetry install` installs the exact versions from `poetry.lock`. Use this for CI or when a new developer clones the repo.
-    - `poetry update` looks for newer versions allowed by your `pyproject.toml` constraints and updates `poetry.lock`. Use this when you intentionally want to upgrade packages.
+- **Forgetting `poetry run`**: Running `python my_script.py` directly will use your global Python, not the project's virtual environment where your dependencies are installed. This leads to `ModuleNotFoundError`. Always use `poetry run`.
+- **Manually editing `poetry.lock`**: The lock file is meant to be machine-generated. Never edit it by hand. Use `poetry add/remove/update` to manage it.
+- **Committing without the lock file**: The `poetry.lock` file is essential for reproducible builds. It **must** be committed to your version control (e.g., Git).
+- **Confusing `poetry install` and `poetry update`**:
+  - `poetry install` installs the exact versions from `poetry.lock`. Use this for CI or when a new developer clones the repo.
+  - `poetry update` looks for newer versions allowed by your `pyproject.toml` constraints and updates `poetry.lock`. Use this when you intentionally want to upgrade packages.
 
 ## 📖 Further Reading
 
--   [Poetry Official Documentation](https://python-poetry.org/docs/)
--   [What is pyproject.toml?](https://snarky.ca/what-the-heck-is-pyproject-toml/)
--   [Pre-commit framework](https://pre-commit.com/)
+- [Poetry Official Documentation](https://python-poetry.org/docs/)
+- [What is pyproject.toml?](https://snarky.ca/what-the-heck-is-pyproject-toml/)
+- [Pre-commit framework](https://pre-commit.com/)

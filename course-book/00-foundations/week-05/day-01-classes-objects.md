@@ -1,6 +1,7 @@
 # Week 5, Day 1: Classes & Objects
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the relationship between classes (blueprints) and objects (instances).
 - [ ] Define custom classes using the `class` keyword.
 - [ ] Use the `__init__` method to initialize the state of an object.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. Class Definition
+
 A **class** is a blueprint for creating objects. An **object** (or **instance**) is a specific realization of a class. For example, `str` is a class, and `"hello"` is an object (an instance of the `str` class).
 
 Object-Oriented Programming (OOP) is a paradigm based on this concept. It allows us to bundle data (attributes) and the functions that operate on that data (methods) together into a single unit.
@@ -27,6 +29,7 @@ print(type(instance1)) # <class '__main__.MyFirstClass'>
 ```
 
 ### 2. The `__init__` Method and `self`
+
 The `__init__` method is a special "dunder" (double underscore) method that acts as the **initializer** for the class. It's called automatically when you create a new instance of the class. Its job is to set up the initial state (the attributes) of the object.
 
 The first parameter of any instance method, including `__init__`, is always a reference to the instance itself. By convention, this parameter is always named `self`.
@@ -48,9 +51,10 @@ my_car = Car("Toyota", "Corolla", 2021)
 ```
 
 ### 3. Instance vs. Class Attributes
+
 - **Instance Attributes**: These belong to a specific instance of a class. They are defined inside `__init__` using `self.attribute_name = value`. Each instance has its own copy of these attributes. In the `Car` example, `make`, `model`, `year`, and `is_running` are all instance attributes.
 
-- **Class Attributes**: These are shared by *all* instances of a class. They are defined directly inside the class, outside of any method.
+- **Class Attributes**: These are shared by _all_ instances of a class. They are defined directly inside the class, outside of any method.
 
 ```python
 class Dog:
@@ -75,6 +79,7 @@ print(f"{dog2.name} is {dog2.age} years old.") # Buddy is 3 years old.
 ```
 
 ### 4. Methods with Types
+
 A **method** is a function that is defined inside a class. It operates on the data of an instance. The first argument is always `self`.
 
 ```python
@@ -102,7 +107,9 @@ class Car:
 ```
 
 ### 5. String Representation: `__str__` and `__repr__`
+
 What happens when you `print()` an object? By default, you get a useless representation like `<__main__.Car object at 0x...>`. You can provide a better string representation by defining dunder methods:
+
 - `__str__(self) -> str`: Called by `print()` and `str()`. Should return a user-friendly string.
 - `__repr__(self) -> str`: Called when the object is inspected in the console. Should return an unambiguous, official string representation of the object, ideally one that can be used to recreate the object (`eval(repr(obj)) == obj`).
 
@@ -167,6 +174,7 @@ print(account) # Account Owner: John Doe, Balance: $75.00
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Practice modeling real-world concepts by creating several distinct classes.
 
 1.  **Create Project File**: In `my-first-poetry-app`, create a new file: `my_first_poetry_app/models.py`.
@@ -188,11 +196,13 @@ print(account) # Account Owner: John Doe, Balance: $75.00
 5.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Forgetting `self`**: Forgetting to include `self` as the first parameter of an instance method is a very common error for beginners. It results in a `TypeError` about a missing positional argument.
 - **Confusing class and instance attributes**: Using `self.species = "..."` inside `__init__` creates an instance attribute that shadows the class attribute. Use `ClassName.species` to refer to the class attribute if you need to.
 - **Calling methods from `__init__`**: It's generally safe, but be careful when calling methods that might be overridden in subclasses (a topic for Day 3).
 - **Not defining `__repr__`**: A class without a `__repr__` is harder to debug. It's a small effort that pays off significantly.
 
 ## 📖 Further Reading
+
 - [Python Docs: Classes](https://docs.python.org/3/tutorial/classes.html) (The official tutorial)
 - [Real Python: Object-Oriented Programming (OOP) in Python 3](https://realpython.com/python3-object-oriented-programming/)

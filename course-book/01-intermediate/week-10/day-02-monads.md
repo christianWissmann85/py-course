@@ -1,6 +1,7 @@
 # Week 10, Day 2: Monads & Functional Patterns
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the core problem that monad-like patterns solve: handling "wrapper" types in sequential computations.
 - [ ] Implement a `Maybe` (or `Option`) type to safely handle computations that might return `None`.
 - [ ] Implement a `Result` (or `Either`) type to handle computations that can fail.
@@ -11,6 +12,7 @@
 ## 📚 Concepts
 
 ### 1. The Core Problem: Chaining "Wrapped" Values
+
 Imagine a series of functions where each can fail (by returning `None`).
 
 ```python
@@ -27,12 +29,14 @@ if user is not None:
         if zip_code is not None:
             print(f"Zip code: {zip_code}")
 ```
+
 This is called the "pyramid of doom" and it's hard to read and maintain. Monadic patterns solve this by creating a "wrapper" or "container" object that knows how to handle the `None` or error case itself.
 
 ### 2. The `Maybe` (or `Option`) Pattern
+
 A `Maybe` represents a value that might be absent. It's a container that is either `Some(value)` or `Nothing`. This makes the possibility of an absent value explicit in the type system, unlike `Optional[T]`, which is just an alias for `T | None`.
 
-The key is to give this container a method (often called `map` or `bind`) that knows how to apply a function to the *wrapped* value.
+The key is to give this container a method (often called `map` or `bind`) that knows how to apply a function to the _wrapped_ value.
 
 - If the container is `Some(value)`, it applies the function to `value` and wraps the result in a new `Some`.
 - If the container is `Nothing`, it does nothing and just passes the `Nothing` along.
@@ -65,10 +69,12 @@ def get_zip_code_maybe(address: str) -> Maybe[str]: ...
 #     .bind(get_zip_code_maybe)
 # )
 ```
+
 The ugly `if` checks are now hidden inside the `bind` method of our `Maybe` container.
 
 ### 3. The `Result` (or `Either`) Pattern
-The `Maybe` pattern is great for handling `None`, but what if you want to know *why* something failed? The `Result` pattern handles this. A `Result` is a container that is either `Ok(value)` or `Err(error_details)`.
+
+The `Maybe` pattern is great for handling `None`, but what if you want to know _why_ something failed? The `Result` pattern handles this. A `Result` is a container that is either `Ok(value)` or `Err(error_details)`.
 
 This is even more powerful because the error can be a string, an exception, or any object with details about the failure.
 
@@ -107,6 +113,7 @@ result_fail = (
 ```
 
 ### 4. Functors and the `map` method
+
 A **Functor** is any type that has a `map` method which applies a function to its wrapped value(s). Our `Maybe` and `Result` types can be made into Functors. The `map` method is like `bind`, but it's for applying a regular function that returns a plain value, not another container.
 
 ```python
@@ -153,47 +160,50 @@ print("Maybe.map works!")
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Implement both `Maybe` and `Result` patterns and use them to refactor a data processing function.
 
 1.  **Create Project File**: In your project, create `my_first_poetry_app/monadic_patterns.py`.
 2.  **Implement `Maybe`**:
-    -   Create a complete, generic `Maybe[T]` dataclass.
-    -   It should have a `bind(self, func)` method.
-    -   It should have a `map(self, func)` method.
-    -   Add a static method `Maybe.from_optional(value: Optional[T]) -> Maybe[T]` to make it easy to create.
+    - Create a complete, generic `Maybe[T]` dataclass.
+    - It should have a `bind(self, func)` method.
+    - It should have a `map(self, func)` method.
+    - Add a static method `Maybe.from_optional(value: Optional[T]) -> Maybe[T]` to make it easy to create.
 3.  **Implement `Result`**:
-    -   Create a complete, generic `Result[T, E]` dataclass (where `T` is the success type and `E` is the error type).
-    -   It should have a `bind(self, func)` method that only calls `func` on success.
-    -   It should have a `map(self, func)` method that only calls `func` on success.
-    -   It should have helper properties like `is_ok()` and `is_err()`.
+    - Create a complete, generic `Result[T, E]` dataclass (where `T` is the success type and `E` is the error type).
+    - It should have a `bind(self, func)` method that only calls `func` on success.
+    - It should have a `map(self, func)` method that only calls `func` on success.
+    - It should have helper properties like `is_ok()` and `is_err()`.
 4.  **Refactor with the Patterns**:
-    -   Start with this "pyramid of doom" code:
-        ```python
-        import json
-        def get_user_score(user_data_str: str) -> str:
-            try:
-                data = json.loads(user_data_str)
-                if "user" in data:
-                    user = data["user"]
-                    if "score" in user:
-                        return f"User score is {user['score']}"
-                    else:
-                        return "Error: 'score' key missing"
-                else:
-                    return "Error: 'user' key missing"
-            except json.JSONDecodeError:
-                return "Error: Invalid JSON"
-        ```
-    -   Refactor this into a clean pipeline using your `Result` type. Create small functions that each do one step and return a `Result` (e.g., `parse_json`, `get_user_key`, `get_score_key`). Chain them together with `.bind()`.
+    - Start with this "pyramid of doom" code:
+      ```python
+      import json
+      def get_user_score(user_data_str: str) -> str:
+          try:
+              data = json.loads(user_data_str)
+              if "user" in data:
+                  user = data["user"]
+                  if "score" in user:
+                      return f"User score is {user['score']}"
+                  else:
+                      return "Error: 'score' key missing"
+              else:
+                  return "Error: 'user' key missing"
+          except json.JSONDecodeError:
+              return "Error: Invalid JSON"
+      ```
+    - Refactor this into a clean pipeline using your `Result` type. Create small functions that each do one step and return a `Result` (e.g., `parse_json`, `get_user_key`, `get_score_key`). Chain them together with `.bind()`.
 5.  **Verify**: Write a `main` function that tests your refactored pipeline with valid and invalid JSON strings. Ensure it passes `mypy` and `ruff`.
 
 ## ⚠️ Common Mistakes
-- **Making it too complicated**: These patterns are meant to *simplify* code. If your implementation is making things harder to read, you might be over-engineering. The goal is to hide `if` statements, not add more layers of complexity.
+
+- **Making it too complicated**: These patterns are meant to _simplify_ code. If your implementation is making things harder to read, you might be over-engineering. The goal is to hide `if` statements, not add more layers of complexity.
 - **Breaking the chain**: The power of these patterns comes from chaining. The `bind` and `map` methods must always return a new instance of the container (`Maybe` or `Result`) so that the next call in the chain can work.
 - **`map` vs. `bind`**: A common confusion.
   - `map` is for applying a simple function `A -> B`.
-  - `bind` (or `flat_map`) is for applying a function that *already returns a container*, `A -> Container[B]`. It "flattens" the result to avoid nested containers like `Maybe[Maybe[int]]`.
+  - `bind` (or `flat_map`) is for applying a function that _already returns a container_, `A -> Container[B]`. It "flattens" the result to avoid nested containers like `Maybe[Maybe[int]]`.
 
 ## 📖 Further Reading
+
 - [F# for Fun and Profit: Railway Oriented Programming](https://fsharpforfunandprofit.com/rop/) (A fantastic, practical explanation of the `Result` pattern)
 - [Monads in Python](https://dev.to/rattis/monads-in-python-2d3e) (A more code-focused Python example)

@@ -1,6 +1,7 @@
 # Week 3, Day 3: Sets & Set Operations
 
 ## 🎯 Learning Objectives
+
 - [ ] Master the fundamental set operations: union, intersection, difference, and symmetric difference.
 - [ ] Understand the core properties of sets: uniqueness and unorderedness.
 - [ ] Use set comprehensions for a concise way to create sets.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. Set Creation and Uniqueness
+
 A `set` is an **unordered** collection of **unique** items. This makes them perfect for tasks like removing duplicates from a list or checking for membership. The items in a set must be immutable (or more accurately, hashable).
 
 ```python
@@ -20,14 +22,17 @@ print(unique_numbers)  # {1, 2, 3, 4, 5} - order is not guaranteed
 # Create a set with literals
 vowels: set[str] = {'a', 'e', 'i', 'o', 'u'}
 ```
+
 **Note**: To create an empty set, you must use `set()`, not `{}`. `{}` creates an empty dictionary.
 
 ### 2. Set Operations
+
 Sets support powerful mathematical operations.
+
 - **Union (`|`)**: All items from both sets.
 - **Intersection (`&`)**: Only items present in both sets.
-- **Difference (`-`)**: Items in the first set but *not* in the second.
-- **Symmetric Difference (`^`)**: Items in either set, but *not* in both.
+- **Difference (`-`)**: Items in the first set but _not_ in the second.
+- **Symmetric Difference (`^`)**: Items in either set, but _not_ in both.
 
 ```python
 set_a: set[int] = {1, 2, 3, 4}
@@ -47,6 +52,7 @@ sym_diff_set: set[int] = set_a ^ set_b
 ```
 
 ### 3. Set Comprehensions
+
 Similar to list comprehensions, set comprehensions provide a concise way to create sets.
 
 ```python
@@ -56,6 +62,7 @@ squares_set: set[int] = {x * x for x in range(10)}
 ```
 
 ### 4. `frozenset`: The Immutable Set
+
 A `frozenset` is an immutable version of a `set`. Once created, you cannot add or remove items. Because they are immutable and hashable, you can use `frozenset`s as dictionary keys or as items within another set.
 
 ```python
@@ -72,7 +79,9 @@ permissions: dict[frozenset[str], str] = {
 ```
 
 ### 5. Performance Advantages
+
 The key advantage of sets is their performance for checking if an item is present.
+
 - `item in my_set`: **O(1)** on average (very fast, constant time)
 - `item in my_list`: **O(n)** on average (slow, requires scanning the list)
 
@@ -127,15 +136,16 @@ assert symmetric_difference(set1, set2) == {1, 2, 4, 5}
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a small library for analyzing text using sets.
 
 1.  **Create Project File**: In `my-first-poetry-app`, create a new file: `my_first_poetry_app/text_analyzer.py`.
 2.  **Implement Text Analysis Functions**:
     - `get_unique_words(text: str) -> set[str]`: Takes a string of text, converts it to lowercase, splits it into words, and returns a set of the unique words. Punctuation should be handled simply (e.g., by removing it).
     - `compare_texts(text1: str, text2: str) -> dict[str, set[str]]`: This function should take two texts and return a dictionary summarizing their relationship. The dictionary should have three keys:
-        - `"common_words"`: A set of words that appear in *both* texts.
-        - `"unique_to_text1"`: A set of words that only appear in the first text.
-        - `"unique_to_text2"`: A set of words that only appear in the second text.
+      - `"common_words"`: A set of words that appear in _both_ texts.
+      - `"unique_to_text1"`: A set of words that only appear in the first text.
+      - `"unique_to_text2"`: A set of words that only appear in the second text.
     - `word_frequency(text: str) -> dict[str, int]`: Although not strictly a set operation, this is a related common task. Return a dictionary where keys are unique words and values are their frequencies.
 3.  **Venn Diagram Simulation (Bonus)**:
     - Research how to represent a Venn diagram with sets.
@@ -146,10 +156,12 @@ assert symmetric_difference(set1, set2) == {1, 2, 4, 5}
 5.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Assuming sets are ordered**: The order of items in a set is arbitrary and can change. Never rely on it. If you need to preserve the order of unique items from a list, you need a different approach (like iterating and adding to a new list if not already seen).
 - **Trying to put mutable items in a set**: `my_set.add([1, 2])` will raise a `TypeError` because lists are mutable and therefore not hashable. You can add tuples: `my_set.add((1, 2))`.
 - **Creating an empty set with `{}`**: `empty = {}` creates an empty dictionary, not a set. Use `empty = set()`.
 - **Inefficiently finding unique items**:
+
   ```python
   # Inefficient way to get unique items from a list
   unique_items = []
@@ -164,6 +176,7 @@ assert symmetric_difference(set1, set2) == {1, 2, 4, 5}
   ```
 
 ## 📖 Further Reading
+
 - [Real Python: Python Sets](https://realpython.com/python-sets/)
 - [Python Docs: Set Types — `set`, `frozenset`](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
 - [Python For Engineers: Sets](https://www.pythonforengineers.com/sets-in-python/) (Good examples of use cases)

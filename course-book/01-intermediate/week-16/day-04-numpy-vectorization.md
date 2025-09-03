@@ -1,6 +1,7 @@
 # Week 16, Day 4: NumPy & Vectorization
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the role of NumPy as the foundation for numerical computing in Python.
 - [ ] Learn to create and manipulate NumPy's core data structure, the `ndarray`.
 - [ ] Grasp the concept of "vectorization" and how it avoids slow Python loops.
@@ -10,17 +11,20 @@
 ## 📚 Concepts
 
 ### 1. What is NumPy?
+
 **NumPy (Numerical Python)** is the fundamental package for numerical computation in Python. It provides:
--   A powerful N-dimensional array object (`ndarray`).
--   Sophisticated "broadcasting" functions.
--   Tools for integrating C/C++ and Fortran code.
--   Useful linear algebra, Fourier transform, and random number capabilities.
+
+- A powerful N-dimensional array object (`ndarray`).
+- Sophisticated "broadcasting" functions.
+- Tools for integrating C/C++ and Fortran code.
+- Useful linear algebra, Fourier transform, and random number capabilities.
 
 The key to NumPy's power is that its arrays are densely packed and homogeneous (all elements are of the same type). The core operations are implemented in highly optimized, pre-compiled C code. This allows NumPy to perform mathematical operations on entire arrays at once, a process called **vectorization**.
 
 First, install it: `poetry add numpy`
 
 ### 2. The `ndarray`
+
 The NumPy array, or `ndarray`, is a grid of values, all of the same type.
 
 ```python
@@ -49,9 +53,11 @@ rng = np.arange(10)      # Like Python's range: [0 1 2 3 4 5 6 7 8 9]
 ```
 
 ### 3. Vectorization: The Magic of NumPy
+
 Vectorization is the process of applying an operation to an entire array at once, rather than element by element in a Python loop. This is **dramatically faster** because the loop happens in optimized C code, not in the Python interpreter.
 
 **Slow Python Loop:**
+
 ```python
 python_list = list(range(1_000_000))
 result_list = []
@@ -60,14 +66,17 @@ for i in python_list:
 ```
 
 **Fast NumPy Vectorization:**
+
 ```python
 numpy_array = np.arange(1_000_000)
 # The multiplication is applied to every element at once in C.
 result_array = numpy_array * 2
 ```
+
 The NumPy version can be 100x faster or more. **The rule of thumb for performance with NumPy is: avoid Python loops whenever possible.** Use vectorized operations instead.
 
 ### 4. Array Operations and Indexing
+
 You can perform all standard mathematical operations on arrays. You can also access elements using a rich indexing system similar to Python lists, but more powerful.
 
 ```python
@@ -91,6 +100,7 @@ print(matrix[matrix > 5]) # [6 7 8 9]
 ```
 
 ### 5. Broadcasting
+
 Broadcasting is a powerful mechanism that allows NumPy to work with arrays of different shapes when performing arithmetic operations. It "broadcasts" the smaller array across the larger array so that they have compatible shapes.
 
 ```python
@@ -108,9 +118,11 @@ result = matrix + row_vector # The row is added to EACH row of the matrix
 # [[11 22 33]
 #  [14 25 36]]
 ```
+
 Broadcasting avoids the need to create extra copies of your data to make shapes match and is a cornerstone of writing efficient, vectorized NumPy code.
 
 ## 🔹 Quick Exercise
+
 You have two NumPy arrays representing 2D vectors. Write a function to calculate the Euclidean distance between them.
 The formula is `sqrt((x1-x2)² + (y1-y2)²)`.
 
@@ -133,6 +145,7 @@ p2 = np.array([4, 5])
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Analyze a dataset of temperatures and demonstrate the performance benefits of NumPy.
 
 You will compare the speed of pure Python vs. NumPy for a common data analysis task.
@@ -140,31 +153,34 @@ You will compare the speed of pure Python vs. NumPy for a common data analysis t
 1.  **Generate Data**: Create a function `generate_data(num_points: int) -> list[float]` that generates a Python list of random temperature readings (e.g., floating-point numbers between -10.0 and 40.0). Generate a dataset with at least 1 million data points.
 
 2.  **Implement Pure Python Version**:
-    -   Write a function `calculate_stats_python(data: list[float]) -> dict`.
-    -   This function should iterate through the list to calculate the mean, standard deviation, and the number of "hot days" (temperatures > 30.0).
-    -   Do not use any libraries other than `math` for standard deviation.
+
+    - Write a function `calculate_stats_python(data: list[float]) -> dict`.
+    - This function should iterate through the list to calculate the mean, standard deviation, and the number of "hot days" (temperatures > 30.0).
+    - Do not use any libraries other than `math` for standard deviation.
 
 3.  **Implement NumPy Version**:
-    -   Write a function `calculate_stats_numpy(data: np.ndarray) -> dict`.
-    -   This function should take a NumPy array as input.
-    -   Use NumPy's built-in functions to calculate the statistics: `np.mean()`, `np.std()`.
-    -   Use boolean indexing to efficiently count the number of "hot days" (`np.sum(data > 30.0)`).
+
+    - Write a function `calculate_stats_numpy(data: np.ndarray) -> dict`.
+    - This function should take a NumPy array as input.
+    - Use NumPy's built-in functions to calculate the statistics: `np.mean()`, `np.std()`.
+    - Use boolean indexing to efficiently count the number of "hot days" (`np.sum(data > 30.0)`).
 
 4.  **Benchmark**:
-    -   Use the `time` module to benchmark both functions on the same large dataset.
-    -   Run each function several times and take the average to get a stable result.
-    -   In a markdown file `numpy_benchmark.md`, present your results in a table.
-    -   Include a conclusion explaining the performance difference. Why is the NumPy version so much faster? Relate it back to the concept of vectorization.
+    - Use the `time` module to benchmark both functions on the same large dataset.
+    - Run each function several times and take the average to get a stable result.
+    - In a markdown file `numpy_benchmark.md`, present your results in a table.
+    - Include a conclusion explaining the performance difference. Why is the NumPy version so much faster? Relate it back to the concept of vectorization.
 
 **Example `numpy_benchmark.md` table:**
 
-| Calculation       | Pure Python (seconds) | NumPy (seconds) | Speedup Factor |
-|-------------------|-----------------------|-----------------|----------------|
-| Mean              | 0.123                 | 0.001           | 123x           |
-| Standard Deviation| 0.245                 | 0.002           | 122.5x         |
-| Hot Day Count     | 0.098                 | 0.003           | 32.7x          |
+| Calculation        | Pure Python (seconds) | NumPy (seconds) | Speedup Factor |
+| ------------------ | --------------------- | --------------- | -------------- |
+| Mean               | 0.123                 | 0.001           | 123x           |
+| Standard Deviation | 0.245                 | 0.002           | 122.5x         |
+| Hot Day Count      | 0.098                 | 0.003           | 32.7x          |
 
 ## 📖 Further Reading
+
 - [NumPy: the absolute basics for beginners](https://numpy.org/doc/stable/user/absolute_beginners.html) (Official Guide)
 - [Real Python: Look Ma, No `for` Loops: Array Programming With NumPy](https://realpython.com/numpy-array-programming/)
 - [From Python to NumPy](https://www.labri.fr/perso/nrougier/from-python-to-numpy/) (A great resource for vectorization patterns)

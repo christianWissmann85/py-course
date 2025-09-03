@@ -1,6 +1,7 @@
 # Week 13, Day 3: WebSockets
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the purpose of the WebSocket protocol and how it differs from HTTP.
 - [ ] Learn to build a basic WebSocket server using the `websockets` library.
 - [ ] Learn to build a WebSocket client to connect to a server.
@@ -10,20 +11,23 @@
 ## 📚 Concepts
 
 ### 1. What are WebSockets?
+
 HTTP is a request-response protocol. The client sends a request, the server sends a response, and the connection is typically closed. This is inefficient for real-time applications (like chat, live notifications, or multiplayer games) where the server might need to "push" data to the client at any time.
 
 **WebSockets** provide a solution. The WebSocket protocol allows for a **full-duplex** (two-way) communication channel over a single, long-lived TCP connection.
 
--   **Handshake**: A WebSocket connection starts as a standard HTTP `GET` request with special headers (`Upgrade: websocket`). If the server supports it, it "upgrades" the connection from HTTP to the WebSocket protocol.
--   **Bi-directional**: Once the connection is established, both the client and server can send messages to each other at any time, independently.
--   **Low Latency**: Because the connection is persistent, it avoids the overhead of establishing new HTTP connections for every message, resulting in lower latency.
+- **Handshake**: A WebSocket connection starts as a standard HTTP `GET` request with special headers (`Upgrade: websocket`). If the server supports it, it "upgrades" the connection from HTTP to the WebSocket protocol.
+- **Bi-directional**: Once the connection is established, both the client and server can send messages to each other at any time, independently.
+- **Low Latency**: Because the connection is persistent, it avoids the overhead of establishing new HTTP connections for every message, resulting in lower latency.
 
 ### 2. The `websockets` Library
+
 The `websockets` library is the leading choice for working with WebSockets in Python. It's built on top of `asyncio`, making it highly performant.
 
 First, install it: `poetry add websockets`
 
 ### 3. Building a WebSocket Server
+
 A server consists of a "handler" coroutine that is executed for each new client connection.
 
 ```python
@@ -60,6 +64,7 @@ if __name__ == "__main__":
 ```
 
 ### 4. Building a WebSocket Client
+
 A client connects to a server's URL (which starts with `ws://` or `wss://` for secure WebSockets).
 
 ```python
@@ -83,6 +88,7 @@ if __name__ == "__main__":
 ```
 
 ### 5. Managing Connections and State
+
 In a real application, you need to manage multiple connections. A common pattern is to keep a set of all active client connections.
 
 ```python
@@ -122,9 +128,11 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 ```
+
 This example forms the basis of a simple chat room.
 
 ## 🔹 Quick Exercise
+
 Modify the `echo_server` from the first example. Instead of just echoing the message, the server should respond with the message in all uppercase letters.
 
 ```python
@@ -144,17 +152,20 @@ async def uppercase_server(websocket):
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a simple real-time chat application.
 
 You will build two scripts: `chat_server.py` and `chat_client.py`.
 
 ### `chat_server.py`
+
 1.  **Use the "Managing Connections and State" example** as your starting point. This server should be able to accept multiple client connections.
 2.  **Track Users**: When a user connects, ask them for a username. The first message they send should be treated as their username.
-3.  **Broadcast Messages**: When a user sends a message, the server should prepend the username to it (e.g., `"[Alice]: Hello everyone!"`) and then broadcast it to all *other* connected clients. The user who sent the message should not receive their own message back.
+3.  **Broadcast Messages**: When a user sends a message, the server should prepend the username to it (e.g., `"[Alice]: Hello everyone!"`) and then broadcast it to all _other_ connected clients. The user who sent the message should not receive their own message back.
 4.  **Handle Disconnections**: When a user disconnects, broadcast a message to all remaining clients announcing their departure (e.g., `"[Server]: Alice has left the chat."`).
 
 ### `chat_client.py`
+
 1.  **Connect to the Server**: The client should connect to `ws://localhost:8765`.
 2.  **Send Messages**: The client should allow the user to type messages in the terminal and send them to the server. You'll need a way to handle user input without blocking the reception of messages. `asyncio.to_thread` can be useful for this, or you can create two separate tasks: one for sending and one for receiving.
 3.  **Receive Messages**: The client must continuously listen for messages from the server and print them to the console.
@@ -163,11 +174,13 @@ You will build two scripts: `chat_server.py` and `chat_client.py`.
 Run the server script in one terminal. Then, open several other terminals and run the client script in each. You should be able to send messages from any client and see them appear on all other clients.
 
 ## ⚠️ Common Mistakes
--   **Blocking the Event Loop**: Using a blocking call (like `time.sleep()` or `input()`) inside an `async` function will freeze the entire server or client. Always use the `async` version (e.g., `await asyncio.sleep()`).
--   **Not Handling Disconnections**: If you don't wrap your message loop in a `try...finally` or `try...except ConnectionClosed`, your server handler might crash when a client disconnects unexpectedly, and you won't be able to clean up resources (like removing them from the `CONNECTED_CLIENTS` set).
--   **State Management Issues**: Forgetting to `add` a client on connection or `remove` them on disconnection can lead to memory leaks or trying to send messages to closed connections.
+
+- **Blocking the Event Loop**: Using a blocking call (like `time.sleep()` or `input()`) inside an `async` function will freeze the entire server or client. Always use the `async` version (e.g., `await asyncio.sleep()`).
+- **Not Handling Disconnections**: If you don't wrap your message loop in a `try...finally` or `try...except ConnectionClosed`, your server handler might crash when a client disconnects unexpectedly, and you won't be able to clean up resources (like removing them from the `CONNECTED_CLIENTS` set).
+- **State Management Issues**: Forgetting to `add` a client on connection or `remove` them on disconnection can lead to memory leaks or trying to send messages to closed connections.
 
 ## 📖 Further Reading
+
 - [websockets library documentation](https://websockets.readthedocs.io/en/stable/)
 - [MDN: WebSockets API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 - [Real Python: Python WebSockets](https://realpython.com/python-websockets/)

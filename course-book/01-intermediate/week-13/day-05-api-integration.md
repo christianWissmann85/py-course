@@ -1,6 +1,7 @@
 # Week 13, Day 5: API Integration Strategies
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand common challenges when integrating third-party APIs.
 - [ ] Implement strategies for handling API rate limits.
 - [ ] Use caching to improve performance and reduce API usage.
@@ -10,9 +11,11 @@
 ## 📚 Concepts
 
 ### 1. The Reality of API Integration
+
 Integrating with an external API involves more than just making HTTP requests. Production-quality integrations must be resilient to a wide range of issues: the API might be slow, it might be down, it might have usage quotas (rate limits), or it might return unexpected data. Building a robust client means anticipating and handling these issues gracefully.
 
 ### 2. Handling Rate Limits
+
 Most public APIs enforce **rate limits** to prevent abuse and ensure fair usage. A rate limit is a cap on how many requests you can make in a given time period (e.g., 60 requests per minute).
 
 If you exceed the limit, the API will typically respond with a `429 Too Many Requests` status code. The response headers often contain information about the limit and when you can try again (e.g., `Retry-After: 60`).
@@ -64,6 +67,7 @@ while True:
 ```
 
 ### 3. Caching API Responses
+
 Caching is one of the most effective ways to improve performance and reduce your API call volume. If you request the same data frequently, store the result locally for a period of time instead of hitting the API every time.
 
 **Strategy: In-Memory Cache with TTL (Time-To-Live)**
@@ -108,6 +112,7 @@ def get_user_data(user_id: int) -> dict:
 ```
 
 ### 4. Retries with Exponential Backoff
+
 Sometimes API calls fail due to transient network issues or temporary server problems. Instead of failing immediately, it's often better to **retry** the request.
 
 **Exponential backoff** is a strategy where you wait progressively longer between each retry (e.g., 1s, 2s, 4s, 8s). This prevents a flood of retries from overwhelming a struggling server.
@@ -138,6 +143,7 @@ def get_with_retries(url: str, max_retries: int = 3, base_delay: float = 1.0):
 ```
 
 ### 5. Mocking APIs for Testing
+
 Your test suite should not depend on external APIs. It makes tests slow, unreliable, and potentially costly. The solution is to **mock** the API.
 
 The `unittest.mock` library (and the `pytest-mock` plugin) allows you to replace the API-calling functions with a "mock" object that returns a predefined response.
@@ -171,6 +177,7 @@ def test_get_username(mocker):
 ```
 
 ## 🔹 Quick Exercise
+
 The `RateLimiter` class in the quick exercise from `CURRICULUM.md` is a bit complex. Let's try a simpler version.
 
 Complete the `SimpleRateLimiter` class below. It should allow a certain number of calls within a fixed time window.
@@ -202,26 +209,28 @@ class SimpleRateLimiter:
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Make the "To-Do List" API client from Day 2 more robust by adding caching, retries, and rate limiting.
 
 1.  **Create a Wrapper Class**: Create a new file `robust_client.py`. In it, create a class `RobustTodoClient` that wraps an instance of your `ApiClient` from Day 2.
 2.  **Add Caching**:
-    -   Implement a caching mechanism for the `get_todo(todo_id)` method. Use a timed cache (like the one in the example) with a TTL of 30 seconds.
-    -   When you call `get_todo(1)` twice in a row, the second call should be a cache hit and should not perform a real (mocked) API call.
+    - Implement a caching mechanism for the `get_todo(todo_id)` method. Use a timed cache (like the one in the example) with a TTL of 30 seconds.
+    - When you call `get_todo(1)` twice in a row, the second call should be a cache hit and should not perform a real (mocked) API call.
 3.  **Add Retries**:
-    -   Wrap the API calls in a retry mechanism with exponential backoff.
-    -   To test this, you can use `pytest-mock` to make the mocked API call fail the first two times but succeed on the third.
+    - Wrap the API calls in a retry mechanism with exponential backoff.
+    - To test this, you can use `pytest-mock` to make the mocked API call fail the first two times but succeed on the third.
 4.  **Add Rate Limiting**:
-    -   Incorporate a rate limiter (like the `SimpleRateLimiter` from the exercise) into your client.
-    -   Ensure that if you try to make too many requests in a short period, the client will pause or prevent the call.
+    - Incorporate a rate limiter (like the `SimpleRateLimiter` from the exercise) into your client.
+    - Ensure that if you try to make too many requests in a short period, the client will pause or prevent the call.
 5.  **Write Tests**:
-    -   Write `pytest` tests for your `RobustTodoClient`.
-    -   Use `mocker` to simulate the underlying `ApiClient`.
-    -   Write a test that verifies caching works.
-    -   Write a test that verifies the retry logic works as expected.
-    -   Write a test to confirm that the rate limiter prevents excessive calls.
+    - Write `pytest` tests for your `RobustTodoClient`.
+    - Use `mocker` to simulate the underlying `ApiClient`.
+    - Write a test that verifies caching works.
+    - Write a test that verifies the retry logic works as expected.
+    - Write a test to confirm that the rate limiter prevents excessive calls.
 
 ## 📖 Further Reading
+
 - [Google Cloud: API Design - Retries](https://cloud.google.com/apis/design/errors#retries)
 - [Stripe API: Rate Limiters](https://stripe.com/blog/rate-limiters)
 - [Real Python: Caching in Python with `functools.lru_cache`](https://realpython.com/lru-cache-python/)

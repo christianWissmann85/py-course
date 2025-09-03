@@ -1,6 +1,7 @@
 # Week 14, Day 4: Database Migrations with Alembic
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand why database migrations are essential for evolving an application's schema.
 - [ ] Learn how to set up and configure Alembic for a SQLAlchemy project.
 - [ ] Generate new migration scripts automatically based on changes to your ORM models.
@@ -10,18 +11,21 @@
 ## 📚 Concepts
 
 ### 1. Why Do We Need Migrations?
+
 As your application evolves, your database schema will inevitably change. You might need to add a new table, add a column to an existing table, or change a column's type.
 
 **The Problem**: How do you apply these changes to your production database without losing data? And how do you ensure that every developer on your team has the same database schema?
 
 **The Solution**: **Database migration tools**. A migration tool treats your schema changes as a series of versioned, ordered scripts.
--   Each script knows how to apply a change (`upgrade`) and how to undo it (`downgrade`).
--   The tool tracks which version the database is currently at.
--   You can bring any database up to the latest version, or roll it back to a previous one.
+
+- Each script knows how to apply a change (`upgrade`) and how to undo it (`downgrade`).
+- The tool tracks which version the database is currently at.
+- You can bring any database up to the latest version, or roll it back to a previous one.
 
 For SQLAlchemy, the standard migration tool is **Alembic**.
 
 ### 2. Setting Up Alembic
+
 First, add Alembic to your project: `poetry add alembic`
 
 Next, you need to initialize an Alembic "environment" in your project directory. This creates a configuration file and a folder to store your migration scripts.
@@ -30,15 +34,18 @@ Next, you need to initialize an Alembic "environment" in your project directory.
 # Run this in your project's root directory
 alembic init alembic
 ```
+
 This creates:
--   `alembic.ini`: The main configuration file.
--   `alembic/`: A directory containing...
-    -   `env.py`: A script that Alembic runs to configure itself. This is where you tell Alembic about your database and your SQLAlchemy models.
-    -   `script.py.mako`: A template for new migration scripts.
-    -   `versions/`: The folder where your migration scripts will live.
+
+- `alembic.ini`: The main configuration file.
+- `alembic/`: A directory containing...
+  - `env.py`: A script that Alembic runs to configure itself. This is where you tell Alembic about your database and your SQLAlchemy models.
+  - `script.py.mako`: A template for new migration scripts.
+  - `versions/`: The folder where your migration scripts will live.
 
 **Configuration (`alembic/env.py`)**
 You need to make two key changes to `env.py`:
+
 1.  Tell Alembic where to find your SQLAlchemy models by importing your `Base` object.
     ```python
     # near the top
@@ -52,9 +59,11 @@ You need to make two key changes to `env.py`:
     ```
 
 ### 3. Creating Migrations
+
 The most powerful feature of Alembic is its ability to **autogenerate** migrations. It compares your current SQLAlchemy models to the state of the database and generates a script to bridge the difference.
 
 Let's say you add a new `age` column to your `User` model:
+
 ```python
 class User(Base):
     # ...
@@ -62,16 +71,19 @@ class User(Base):
 ```
 
 Now, you can ask Alembic to generate a migration script:
+
 ```bash
 alembic revision --autogenerate -m "Add age column to users table"
 ```
--   `revision`: Creates a new revision file.
--   `--autogenerate`: Tells Alembic to detect changes.
--   `-m "..."`: Provides a descriptive message for the migration.
+
+- `revision`: Creates a new revision file.
+- `--autogenerate`: Tells Alembic to detect changes.
+- `-m "..."`: Provides a descriptive message for the migration.
 
 This will create a new file in `alembic/versions/` like `..._add_age_column_to_users_table.py`.
 
 The file will contain two functions:
+
 ```python
 """Add age column to users table
 
@@ -101,15 +113,18 @@ def downgrade() -> None:
     op.drop_column('users', 'age')
     # ### end Alembic commands ###
 ```
--   `upgrade()`: Applies the change (adds the `age` column).
--   `downgrade()`: Reverts the change (drops the `age` column).
+
+- `upgrade()`: Applies the change (adds the `age` column).
+- `downgrade()`: Reverts the change (drops the `age` column).
 
 Always review auto-generated migrations to ensure they are correct!
 
 ### 4. Applying and Reverting Migrations
+
 Once you have a migration script, you can apply it to your database.
 
 **Upgrading:**
+
 ```bash
 # See the current status of migrations
 alembic current
@@ -120,9 +135,11 @@ alembic upgrade head
 # Upgrade to a specific revision
 alembic upgrade 1a2b3c4d5e6f
 ```
+
 `head` is a special name that always refers to the latest migration.
 
 **Downgrading:**
+
 ```bash
 # Downgrade by one version
 alembic downgrade -1
@@ -135,11 +152,13 @@ alembic downgrade base
 ```
 
 ## 🔹 Quick Exercise
+
 You have an existing `users` table with `id` and `name` columns. You want to add a `nickname` column that can be null.
 
 What would the `upgrade()` and `downgrade()` functions look like in an Alembic migration script for this change?
 
 **Answer:**
+
 ```python
 def upgrade() -> None:
     op.add_column('users', sa.Column('nickname', sa.String(50), nullable=True))
@@ -147,46 +166,56 @@ def upgrade() -> None:
 def downgrade() -> None:
     op.drop_column('users', 'nickname')
 ```
+
 This is what Alembic's `--autogenerate` feature would typically create for you.
 
 ## 📝 Daily Assignment
+
 **Goal**: Integrate Alembic into your "To-Do List" application from yesterday.
 
 1.  **Initialize Alembic**:
-    -   In your project directory, run `alembic init alembic`.
-    -   Configure `alembic.ini` to point to your `todos.db` SQLite database.
-    -   Configure `alembic/env.py` to import the `Base` from your `todo_orm.py` and set `target_metadata`.
+
+    - In your project directory, run `alembic init alembic`.
+    - Configure `alembic.ini` to point to your `todos.db` SQLite database.
+    - Configure `alembic/env.py` to import the `Base` from your `todo_orm.py` and set `target_metadata`.
 
 2.  **Create an Initial Migration**:
-    -   Assuming your database is currently empty, generate an initial migration that creates the `users` and `todos` tables.
-    -   Run `alembic revision --autogenerate -m "Create initial users and todos tables"`.
-    -   Inspect the generated script to see how it creates your tables.
+
+    - Assuming your database is currently empty, generate an initial migration that creates the `users` and `todos` tables.
+    - Run `alembic revision --autogenerate -m "Create initial users and todos tables"`.
+    - Inspect the generated script to see how it creates your tables.
 
 3.  **Apply the Migration**:
-    -   Run `alembic upgrade head` to apply the migration and create the tables in your database.
-    -   Use a tool like `sqlite3` or a DB viewer to confirm that the tables were created correctly.
+
+    - Run `alembic upgrade head` to apply the migration and create the tables in your database.
+    - Use a tool like `sqlite3` or a DB viewer to confirm that the tables were created correctly.
 
 4.  **Make a Schema Change**:
-    -   Modify your `Todo` model in `todo_orm.py`. Add a new column, for example, `priority: int = Column(Integer, nullable=False, server_default='0')`.
+
+    - Modify your `Todo` model in `todo_orm.py`. Add a new column, for example, `priority: int = Column(Integer, nullable=False, server_default='0')`.
 
 5.  **Generate a New Migration**:
-    -   Run `alembic revision --autogenerate -m "Add priority column to todos"` to generate a new migration script for this change.
-    -   Inspect the new script. It should contain an `op.add_column()` command.
+
+    - Run `alembic revision --autogenerate -m "Add priority column to todos"` to generate a new migration script for this change.
+    - Inspect the new script. It should contain an `op.add_column()` command.
 
 6.  **Apply the New Migration**:
-    -   Run `alembic upgrade head` again. This will apply only the new migration.
-    -   Verify with a DB viewer that the `priority` column now exists in your `todos` table.
+
+    - Run `alembic upgrade head` again. This will apply only the new migration.
+    - Verify with a DB viewer that the `priority` column now exists in your `todos` table.
 
 7.  **Practice Downgrading**:
-    -   Run `alembic downgrade -1` to revert the `priority` column addition. Verify it's gone.
-    -   Run `alembic upgrade head` one last time to bring the database back to the latest version.
+    - Run `alembic downgrade -1` to revert the `priority` column addition. Verify it's gone.
+    - Run `alembic upgrade head` one last time to bring the database back to the latest version.
 
 ## ⚠️ Common Mistakes
--   **Editing Old Migrations**: Never edit a migration script that has already been applied to a production or shared database. If you need to make a change, create a *new* migration script.
--   **Forgetting to Configure `env.py`**: If `target_metadata` is not set correctly in `env.py`, autogenerate will not detect any of your models and will try to delete all your tables.
--   **Manual Edits and Autogenerate Fighting**: If you make manual changes to the database schema outside of Alembic, the next autogenerate run will be confused and may create incorrect scripts. Always let Alembic manage the schema.
--   **Not Using Descriptive Messages**: A migration history of `-m "Update"` is useless. Be descriptive (e.g., `-m "Add phone_number to users"`).
+
+- **Editing Old Migrations**: Never edit a migration script that has already been applied to a production or shared database. If you need to make a change, create a _new_ migration script.
+- **Forgetting to Configure `env.py`**: If `target_metadata` is not set correctly in `env.py`, autogenerate will not detect any of your models and will try to delete all your tables.
+- **Manual Edits and Autogenerate Fighting**: If you make manual changes to the database schema outside of Alembic, the next autogenerate run will be confused and may create incorrect scripts. Always let Alembic manage the schema.
+- **Not Using Descriptive Messages**: A migration history of `-m "Update"` is useless. Be descriptive (e.g., `-m "Add phone_number to users"`).
 
 ## 📖 Further Reading
+
 - [Alembic Official Tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
 - [Alembic Autogenerate Documentation](https://alembic.sqlalchemy.org/en/latest/autogenerate.html)

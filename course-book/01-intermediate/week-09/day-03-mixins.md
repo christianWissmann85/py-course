@@ -1,6 +1,7 @@
 # Week 9, Day 3: Mixins & Multiple Inheritance
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand and use multiple inheritance to create classes that combine behaviors.
 - [ ] Grasp the concept of Method Resolution Order (MRO) and how Python resolves method calls.
 - [ ] Use the "mixin" pattern to add reusable, plug-in functionality to classes.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. Multiple Inheritance
+
 A Python class can inherit from multiple parent classes. This allows a child class to inherit methods and attributes from all of them.
 
 ```python
@@ -33,9 +35,11 @@ class Event(Logger, Timestamped):
 my_event = Event("User Login")
 my_event.record()
 ```
+
 While powerful, multiple inheritance can make code complex and hard to reason about if overused.
 
 ### 2. Method Resolution Order (MRO)
+
 When you call a method on an object, how does Python know where to find it among all the parent classes? It follows a specific order called the **Method Resolution Order (MRO)**.
 
 The MRO for a class is a linearized list of all its base classes, from the class itself up to `object`. Python searches this list in order and uses the first implementation of the method it finds. You can inspect the MRO of any class using the `mro()` method or the `__mro__` attribute.
@@ -45,9 +49,11 @@ print(Event.mro())
 # Output might be:
 # [<class '__main__.Event'>, <class '__main__.Logger'>, <class '__main__.Timestamped'>, <class 'object'>]
 ```
+
 Python uses a sophisticated algorithm called C3 linearization to compute the MRO, which ensures a consistent and predictable order, even in complex hierarchies.
 
 ### 3. The Mixin Pattern
+
 A **mixin** is a class that provides a specific, self-contained piece of functionality, but is not meant to be instantiated on its own. It's designed to be "mixed in" to other classes via multiple inheritance to add its behavior.
 
 Mixins are a great way to practice **composition over inheritance**. Instead of a deep inheritance tree, you compose a class's functionality from smaller, reusable pieces.
@@ -71,9 +77,11 @@ p = Person("Alice", 30)
 # The to_dict method comes from the mixin!
 print(p.to_dict()) # {'name': 'Alice', 'age': 30}
 ```
+
 Mixin class names often end with `Mixin`.
 
 ### 4. `super()` and the Diamond Problem
+
 The "diamond problem" is a classic issue in multiple inheritance. It occurs when a class inherits from two classes that both inherit from the same grandparent class.
 
 ```
@@ -83,6 +91,7 @@ The "diamond problem" is a classic issue in multiple inheritance. It occurs when
      \ /
       D
 ```
+
 If `D` calls a method that exists in `B` and `C`, which one should be called? And if `B` and `C` both call the method on `A` (the grandparent), does `A`'s method get called twice?
 
 The combination of Python's MRO and `super()` solves this. `super()` does not necessarily call the "parent" class. Instead, it calls the **next class in the MRO**. This ensures that each class in the inheritance hierarchy is called exactly once, in the correct order.
@@ -117,6 +126,7 @@ d.do_something()
 ```
 
 ### 5. Best Practices
+
 - **Favor Composition and Mixins**: Before creating a deep inheritance tree, ask if you can achieve the same result by "mixing in" functionality or by having one object contain another (composition).
 - **Keep Mixins Small and Focused**: A mixin should do one thing well (e.g., logging, serialization).
 - **Avoid Name Collisions**: Be careful that methods in different mixins don't have the same name, as one will override the other based on the MRO.
@@ -162,31 +172,34 @@ print(f"Created At: {doc.created_at}")
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a small system of configurable components using mixins.
 
 1.  **Create Project File**: In your project, create `my_first_poetry_app/mixins.py`.
 2.  **Define Mixin Classes**:
-    -   `JSONMixin`: Provides a `to_json(self) -> str` method that serializes the object's `__dict__` to a JSON string.
-    -   `XMLMixin`: Provides a `to_xml(self) -> str` method that creates a simple XML representation of the object.
-    -   `LoggerMixin`: Provides a `log(self, message)` method that prints a formatted log message, including the class name.
+    - `JSONMixin`: Provides a `to_json(self) -> str` method that serializes the object's `__dict__` to a JSON string.
+    - `XMLMixin`: Provides a `to_xml(self) -> str` method that creates a simple XML representation of the object.
+    - `LoggerMixin`: Provides a `log(self, message)` method that prints a formatted log message, including the class name.
 3.  **Define a Base Class**:
-    -   Create a simple `Data` class with an `__init__` that accepts `**kwargs` and sets them as attributes.
+    - Create a simple `Data` class with an `__init__` that accepts `**kwargs` and sets them as attributes.
 4.  **Compose Concrete Classes**:
-    -   Create a class `JSONLoggerData(JSONMixin, LoggerMixin, Data)` that can be logged and serialized to JSON.
-    -   Create a class `XMLLoggerData(XMLMixin, LoggerMixin, Data)` that can be logged and serialized to XML.
+    - Create a class `JSONLoggerData(JSONMixin, LoggerMixin, Data)` that can be logged and serialized to JSON.
+    - Create a class `XMLLoggerData(XMLMixin, LoggerMixin, Data)` that can be logged and serialized to XML.
 5.  **`main()` function**:
-    -   Create an instance of `JSONLoggerData` with some data. Call its `log()` and `to_json()` methods.
-    -   Create an instance of `XMLLoggerData` with some data. Call its `log()` and `to_xml()` methods.
-    -   Print the MRO for one of your composed classes to see the resolution order.
+    - Create an instance of `JSONLoggerData` with some data. Call its `log()` and `to_json()` methods.
+    - Create an instance of `XMLLoggerData` with some data. Call its `log()` and `to_xml()` methods.
+    - Print the MRO for one of your composed classes to see the resolution order.
 6.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Forgetting `super().__init__()`**: In a multiple inheritance scenario, if any class in the chain omits the `super().__init__()` call, it breaks the chain and the `__init__` methods of classes further up the MRO will not be called.
 - **Creating a "god object"**: Multiple inheritance can be tempting to create a single class that does everything. This is an anti-pattern. Mixins should add focused, orthogonal (independent) functionality.
 - **Not understanding the MRO**: The order in which you list parent classes matters. `class D(B, C)` has a different MRO from `class D(C, B)`, which can change which parent's method gets called first.
 - **Using multiple inheritance when an ABC or Protocol is better**: If you just need to define a common interface, an ABC or Protocol is often a much cleaner and safer choice than using multiple inheritance as a substitute.
 
 ## 📖 Further Reading
+
 - [Real Python: Multiple Inheritance and Mixins](https://realpython.com/python-multiple-inheritance/)
 - [Raymond Hettinger: Super considered super!](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/) (A classic talk explaining `super` and the MRO)
 - [The Python `super()` Guide](https://www.python-course.eu/python3_super.php)

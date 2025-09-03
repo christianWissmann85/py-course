@@ -1,6 +1,7 @@
 # Week 2, Day 1: Variables & Basic Types
 
 ## 🎯 Learning Objectives
+
 - [ ] Master the declaration of variables with clear, explicit type annotations.
 - [ ] Understand the concept of immutability and which basic types are immutable.
 - [ ] Learn how to use type aliases to create more readable type hints.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. Variable Declaration with Types
+
 In Python, you declare a variable by assigning a value to it. With type hints, you can also declare its expected type. This makes your code clearer and allows MyPy to catch errors. The syntax is `variable_name: type = value`.
 
 ```python
@@ -19,7 +21,9 @@ is_available: bool = True
 ```
 
 ### 2. Primitive Types & Immutability
+
 The basic building blocks of data in Python are the primitive types:
+
 - `int`: Integers (e.g., `10`, `-3`).
 - `float`: Floating-point numbers (e.g., `3.14`, `-0.001`).
 - `str`: Strings of text (e.g., `"Hello"`, `'Python'`).
@@ -35,6 +39,7 @@ name = name + " Verne"
 ```
 
 ### 3. Type Inference vs. Explicit Annotation
+
 MyPy is often smart enough to infer the type of a variable from its assigned value.
 
 ```python
@@ -45,6 +50,7 @@ user_id = 123
 However, for this course and for professional-grade code, we **always prefer explicit type annotations**. It makes the author's intent clear and reduces ambiguity, both for human readers and for the type checker.
 
 ### 4. Constants with `Final`
+
 Sometimes, you want to declare a variable whose value should never be changed. This is called a constant. Python doesn't have a built-in `const` keyword, but the `typing` module provides `Final`.
 
 `Final` tells the type checker that a variable should not be reassigned.
@@ -60,6 +66,7 @@ GRAVITATIONAL_CONSTANT: Final[float] = 9.81
 ```
 
 ### 5. Precise Types with `Literal`
+
 What if a variable can only have a few specific string values? For example, a status that can only be `"active"`, `"inactive"`, or `"pending"`. Using `str` as the type is too broad. `Literal` lets you be more precise.
 
 ```python
@@ -74,6 +81,7 @@ order_status: OrderStatus = "processing"
 # order_status = "cancelled"
 # error: Invalid value "cancelled" for type Literal["new", "processing", "shipped", "delivered"]
 ```
+
 We also used a **type alias** here by assigning the `Literal` to the `OrderStatus` variable. This makes the type hint reusable and much cleaner.
 
 ## 🔹 Quick Exercise
@@ -129,7 +137,8 @@ print(f"PI is {PI}. Is the task done? {is_task_done}")
     - Run the type checker with `poetry run mypy .` and fix all errors.
 
 ## ⚠️ Common Mistakes
-- **Confusing `Final` with immutability**: `Final` prevents reassignment of the variable name. It does *not* make the object itself immutable. If you have a `Final[list]`, you can still `append` to the list.
+
+- **Confusing `Final` with immutability**: `Final` prevents reassignment of the variable name. It does _not_ make the object itself immutable. If you have a `Final[list]`, you can still `append` to the list.
 - **Using type aliases incorrectly**: A type alias is just a name. You use it in the type annotation spot, not as a function or class.
   ```python
   # Correct
@@ -140,6 +149,7 @@ print(f"PI is {PI}. Is the task done? {is_task_done}")
 - **Overly broad types**: Using `str` when `Literal["a", "b"]` is more accurate. The goal of modern typing is to be as precise as possible.
 
 ## 📖 Further Reading
+
 - [Python Docs: `typing` — Support for type hints](https://docs.python.org/3/library/typing.html) (The official source of truth)
 - [MyPy Docs: Type aliases](https://mypy.readthedocs.io/en/stable/type_aliases.html)
 - [MyPy Docs: Final names](https://mypy.readthedocs.io/en/stable/final_attrs.html)

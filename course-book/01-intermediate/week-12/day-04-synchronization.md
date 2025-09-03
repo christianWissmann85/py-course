@@ -1,6 +1,7 @@
 # Week 12, Day 4: Synchronization Primitives
 
 ## 🎯 Learning Objectives
+
 - [ ] Deepen understanding of `Lock` objects for mutual exclusion.
 - [ ] Learn to use `RLock` (Re-entrant Lock) for complex synchronization scenarios.
 - [ ] Use `Semaphore` objects to limit access to a resource.
@@ -12,6 +13,7 @@
 So far, we've used `threading.Lock` to prevent race conditions. A lock is the most fundamental **synchronization primitive**, but the `threading` module provides several others that are useful for more complex coordination between threads.
 
 ### 1. `Lock` vs. `RLock` (Re-entrant Lock)
+
 A standard `threading.Lock` cannot be acquired more than once by the same thread. If a thread owns a lock and tries to acquire it again, it will block forever—a deadlock.
 
 ```python
@@ -28,9 +30,9 @@ print("Acquired.")
 # print("This will never be printed.")
 ```
 
-A **re-entrant lock (`threading.RLock`)** *can* be acquired multiple times by the same thread. It keeps a counter. `acquire()` increments the counter, and `release()` decrements it. The lock is only fully released for other threads to acquire when the counter is zero.
+A **re-entrant lock (`threading.RLock`)** _can_ be acquired multiple times by the same thread. It keeps a counter. `acquire()` increments the counter, and `release()` decrements it. The lock is only fully released for other threads to acquire when the counter is zero.
 
-This is useful in recursive functions or in situations where a function that needs a lock calls another function that *also* needs that same lock.
+This is useful in recursive functions or in situations where a function that needs a lock calls another function that _also_ needs that same lock.
 
 ```python
 import threading
@@ -49,6 +51,7 @@ def recursive_function(depth):
 ```
 
 ### 2. `Semaphore`
+
 A semaphore is a counter that is used to limit the number of threads that can access a resource simultaneously. A `Lock` is essentially a semaphore with a count of 1.
 
 You initialize a semaphore with a value. `acquire()` decrements the counter, and `release()` increments it. If a thread calls `acquire()` when the counter is zero, it will block until another thread calls `release()`.
@@ -83,6 +86,7 @@ for t in threads:
 ```
 
 ### 3. `Event`
+
 An `Event` object is a simple but powerful tool for one thread to signal information to other threads. It's like a flag. One thread can set the event, and other threads can wait for it to be set.
 
 - `event.set()`: Sets the internal flag to true. All threads waiting for it are awakened.
@@ -115,6 +119,7 @@ t.join()
 ```
 
 ### 4. `Barrier`
+
 A `Barrier` is used to make a fixed number of threads wait for each other at a certain point in their execution before they are all allowed to proceed.
 
 You create a barrier with a specific number of parties (threads). Each thread calls `barrier.wait()`. The call will block until all `parties` number of threads have called `wait()`. At that point, they are all released simultaneously.
@@ -152,10 +157,13 @@ for i in range(num_threads):
 for t in threads:
     t.join()
 ```
+
 If one of the waiting threads times out or is reset, the barrier is considered "broken", and any other threads waiting on it will raise a `threading.BrokenBarrierError`.
 
 ## 🔹 Quick Exercise
+
 You are building a system that processes data in three stages. Three different worker threads are responsible for each stage.
+
 - Thread A fetches data.
 - Thread B processes the data.
 - Thread C saves the data.
@@ -163,33 +171,36 @@ You are building a system that processes data in three stages. Three different w
 Thread B cannot start until Thread A is finished. Thread C cannot start until Thread B is finished. Use two `Event` objects to coordinate this workflow.
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a simulation of a "producer-consumer" problem using a `Queue` and synchronization primitives.
 
 The **producer-consumer problem** is a classic concurrency pattern. One or more "producers" generate data and put it into a shared buffer (a queue). One or more "consumers" take data from the buffer and process it.
 
 **Your Task**:
+
 1.  **Create Project File**: `my_first_poetry_app/producer_consumer.py`.
 2.  **The Shared `Queue`**: Create a `queue.Queue` object. To make the problem more interesting, give it a `maxsize`, for example, `queue.Queue(maxsize=5)`. This means the queue will block producers if it's full.
 3.  **Implement the Producer**:
-    -   Create a `producer` function that runs in a thread.
-    -   It should loop a certain number of times (e.g., 20).
-    -   In each loop, it should generate a piece of data (e.g., a random number or a string like `"item-X"`).
-    -   It then puts the item onto the shared queue using `queue.put()`.
-    -   Add `print` statements to show what the producer is doing.
+    - Create a `producer` function that runs in a thread.
+    - It should loop a certain number of times (e.g., 20).
+    - In each loop, it should generate a piece of data (e.g., a random number or a string like `"item-X"`).
+    - It then puts the item onto the shared queue using `queue.put()`.
+    - Add `print` statements to show what the producer is doing.
 4.  **Implement the Consumer**:
-    -   Create a `consumer` function that runs in a thread.
-    -   It should loop forever (`while True`).
-    -   In the loop, it gets an item from the queue using `queue.get()`. This will block if the queue is empty.
-    -   It processes the item (e.g., just printing it is fine).
-    -   After getting and processing, it must call `queue.task_done()`. This is crucial for the final step.
+    - Create a `consumer` function that runs in a thread.
+    - It should loop forever (`while True`).
+    - In the loop, it gets an item from the queue using `queue.get()`. This will block if the queue is empty.
+    - It processes the item (e.g., just printing it is fine).
+    - After getting and processing, it must call `queue.task_done()`. This is crucial for the final step.
 5.  **Putting It Together**:
-    -   In your main script, create the shared queue.
-    -   Create and start one or more producer threads.
-    -   Create and start one or more consumer threads. **Important**: Consumer threads should be daemon threads (`threading.Thread(target=consumer, daemon=True)`). This means they will be shut down automatically when the main program exits.
-    -   After starting the producers, the main thread should wait for them to finish their work. Use `thread.join()` for each producer thread.
-    -   After the producers are done, the main thread needs to wait for the consumers to finish processing all the items that are left in the queue. The elegant way to do this is `queue.join()`. This call will block until every item that was ever `.put()` into the queue has had `task_done()` called for it.
-    -   Finally, print a "Finished" message.
+    - In your main script, create the shared queue.
+    - Create and start one or more producer threads.
+    - Create and start one or more consumer threads. **Important**: Consumer threads should be daemon threads (`threading.Thread(target=consumer, daemon=True)`). This means they will be shut down automatically when the main program exits.
+    - After starting the producers, the main thread should wait for them to finish their work. Use `thread.join()` for each producer thread.
+    - After the producers are done, the main thread needs to wait for the consumers to finish processing all the items that are left in the queue. The elegant way to do this is `queue.join()`. This call will block until every item that was ever `.put()` into the queue has had `task_done()` called for it.
+    - Finally, print a "Finished" message.
 
 ## 📖 Further Reading
+
 - [Real Python: An Intro to Threading in Python (Covers all these primitives)](https://realpython.com/intro-to-python-threading/)
 - [Python Docs: `threading` — Synchronization Objects](https://docs.python.org/3/library/threading.html#lock-objects)

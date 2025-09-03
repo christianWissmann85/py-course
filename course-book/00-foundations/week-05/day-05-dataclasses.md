@@ -1,6 +1,7 @@
 # Week 5, Day 5: Dataclasses
 
 ## 🎯 Learning Objectives
+
 - [ ] Use the `@dataclass` decorator to reduce boilerplate code in classes that primarily store data.
 - [ ] Understand the benefits of dataclasses, such as auto-generated special methods.
 - [ ] Configure dataclass behavior using `field()` and decorator arguments.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. The `@dataclass` Decorator
+
 Often, you write classes that are primarily just containers for data. You have to write `__init__`, `__repr__`, `__eq__`, and other dunder methods over and over. The `@dataclass` decorator, introduced in Python 3.7, automates all of this for you.
 
 You apply it to a class, and it automatically generates methods based on the type-annotated attributes you declare.
@@ -43,9 +45,11 @@ p2 = Point(10.5, 20.0)
 print(p1)       # Point(x=10.5, y=20.0)  <-- nice __repr__
 print(p1 == p2) # True                   <-- useful __eq__
 ```
+
 Dataclasses are still regular Python classes; the decorator just adds the boilerplate methods for you at compile time.
 
 ### 2. Field Configuration with `field()`
+
 The `dataclasses.field()` function gives you more control over each attribute. A common use case is providing a mutable default value, like a list. You must use a `default_factory` to do this, which prevents the common mistake of sharing a single mutable default across all instances.
 
 ```python
@@ -67,9 +71,11 @@ p2 = Playlist("Indie Jams", "Bob")
 print(p1) # Playlist(name='Rock Hits', owner='Alice', songs=['Bohemian Rhapsody'])
 print(p2) # Playlist(name='Indie Jams', owner='Bob', songs=[])
 ```
+
 You can also use `field()` to exclude an attribute from the `__init__` or `__repr__` methods.
 
 ### 3. Post-init Processing with `__post_init__`
+
 Sometimes you need to run some logic after the `__init__` method has been called (e.g., to compute a value based on other attributes). Dataclasses provide a special method, `__post_init__`, for this purpose.
 
 ```python
@@ -90,6 +96,7 @@ print(c) # Circle(radius=10, area=314.159)
 ```
 
 ### 4. Frozen Dataclasses (Immutability)
+
 If you want to create an immutable data structure, you can set `frozen=True`. This makes instances of the dataclass read-only. Attempting to change an attribute after creation will raise a `FrozenInstanceError`.
 
 Frozen dataclasses are also hashable, meaning you can use their instances as keys in a dictionary or items in a set.
@@ -108,6 +115,7 @@ point_map = {p: "Origin"}
 ```
 
 ### 5. Comparison and Ordering
+
 By default, `@dataclass` only generates `__eq__`. If you want ordering methods (`<`, `<=`, etc.), you can set `order=True`. The decorator will generate them for you, comparing the attributes in the order they are defined in the class.
 
 ```python
@@ -155,6 +163,7 @@ assert p2.tags == []
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Refactor some of the classes you built earlier in the week to use dataclasses.
 
 1.  **Create Project File**: In your `models.py` file, you'll be refactoring existing classes or creating new ones.
@@ -176,12 +185,14 @@ assert p2.tags == []
 5.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Using a mutable default without `default_factory`**: `tags: list = []` in a dataclass is a bug waiting to happen, as all instances will share the same list. Always use `field(default_factory=list)`.
 - **Forgetting `init=False` for calculated fields**: If an attribute is calculated in `__post_init__`, it shouldn't be part of the `__init__` signature. You must mark it with `field(init=False)`.
 - **Trying to modify a frozen instance**: Remember that `@dataclass(frozen=True)` means you cannot change attributes after creation.
 - **Complex logic in `__post_init__`**: `__post_init__` is for simple initialization logic. If it becomes very complex, a custom `__init__` in a regular class might be a better choice. Dataclasses are best for data-heavy, logic-light classes.
 
 ## 📖 Further Reading
+
 - [Python Docs: `dataclasses`](https://docs.python.org/3/library/dataclasses.html) (The official documentation is excellent)
 - [Real Python: The Ultimate Guide to Python Dataclasses](https://realpython.com/python-dataclasses/)
 - [PEP 557 -- Data Classes](https://peps.python.org/pep-0557/)

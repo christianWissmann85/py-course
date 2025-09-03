@@ -1,6 +1,7 @@
 # Week 2, Day 3: Control Flow with Types
 
 ## 🎯 Learning Objectives
+
 - [ ] Write type-safe conditional statements (`if`, `elif`, `else`).
 - [ ] Understand how type checkers use "type narrowing" to infer more specific types within code blocks.
 - [ ] Use Python 3.10's `match` statement for elegant structural pattern matching.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. `if/elif/else` with Types
+
 The fundamental control flow statements work exactly as you'd expect, but type checkers add a layer of safety. They can analyze the conditions to understand what's possible within each block.
 
 ```python
@@ -20,9 +22,11 @@ def check_value(value: int) -> str:
     else:
         return "Small"
 ```
+
 MyPy knows that `value` is always an `int`, and the function must always return a `str`. If you forget the `else` block, MyPy will complain that your function might not return a value.
 
 ### 2. Type Narrowing
+
 This is a powerful feature of static type checkers. When you perform a check (like `isinstance`), MyPy "narrows" the type of the variable to be more specific within that block.
 
 ```python
@@ -41,6 +45,7 @@ def process_data(data: Union[str, int]) -> None:
 ```
 
 ### 3. The `match` Statement (Python 3.10+)
+
 The `match` statement provides a clean way to handle complex conditional logic, similar to a `switch` statement in other languages but much more powerful. It's called "structural pattern matching".
 
 ```python
@@ -60,9 +65,11 @@ def describe(item: Any) -> None:
 describe("hello")  # It's a string.
 describe([1, 2, 3, 4, 5]) # It's a long list.
 ```
+
 The `match` statement also performs type narrowing.
 
 ### 4. Guard Clauses (Early Returns)
+
 Guard clauses are a pattern for writing cleaner functions by checking for edge cases or invalid conditions at the very beginning of the function and exiting early. This avoids deeply nested `if/else` blocks.
 
 ```python
@@ -90,6 +97,7 @@ def process_item_clean(item: dict | None) -> str:
 ```
 
 ### 5. Assertion Types
+
 The `assert` statement checks if a condition is true. If it's not, it raises an `AssertionError`. Type checkers also use `assert` for type narrowing. This is useful when you have information about a type that the checker doesn't.
 
 ```python
@@ -104,6 +112,7 @@ def greet(name: Optional[str]) -> None:
     # So this is type-safe:
     print(f"Hello, {name.upper()}")
 ```
+
 Assertions are great for internal checks and making types more specific, but they can be disabled in production, so they shouldn't replace proper error handling for user input.
 
 ## 🔹 Quick Exercise
@@ -143,6 +152,7 @@ assert safe_divide(10, 0) is None
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a small, type-safe decision tree system.
 
 1.  **Create Project File**: In `my-first-poetry-app`, create a new file: `my_first_poetry_app/decision_maker.py`.
@@ -168,6 +178,7 @@ assert safe_divide(10, 0) is None
 7.  **Verify**: Run `poetry run python ...` and `poetry run mypy .` and `poetry run ruff check .` and fix all issues.
 
 ## ⚠️ Common Mistakes
+
 - **Complex nested `if`s**: Code that looks like an arrowhead (`>`) with many levels of indentation is a "code smell". It's hard to read and maintain. Refactor using guard clauses or by breaking the logic into smaller functions.
 - **`match` statement without a wildcard**: If you use a `match` statement and don't include a wildcard case (`case _: ...`), MyPy will warn you if it's possible for a value to not match any case, which could lead to a runtime error.
 - **Confusing `is` and `==`**:
@@ -176,6 +187,7 @@ assert safe_divide(10, 0) is None
 - **Relying on "truthiness" with ambiguous types**: An empty string `""` is `False` in a boolean context. If a function can return `str | None`, checking `if result:` is risky because both `None` and `""` will evaluate to `False`. Be explicit: `if result is not None:`.
 
 ## 📖 Further Reading
+
 - [Python Docs: More Control Flow Tools](https://docs.python.org/3/tutorial/controlflow.html) (Covers `if`, `for`, `match`, etc.)
 - [Real Python: Structural Pattern Matching](https://realpython.com/python-match-case-statement/)
 - [MyPy Docs: Type Narrowing](https://mypy.readthedocs.io/en/stable/type_narrowing.html)

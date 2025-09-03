@@ -1,6 +1,7 @@
 # Week 15, Day 5: Building Interactive Textual Apps
 
 ## 🎯 Learning Objectives
+
 - [ ] Learn advanced techniques for handling user input and actions.
 - [ ] Understand and implement state management in a Textual app.
 - [ ] Use reactive attributes and data binding to automatically update the UI when data changes.
@@ -10,6 +11,7 @@
 ## 📚 Concepts
 
 ### 1. Advanced Event Handling: Actions
+
 Yesterday we saw how to handle events with `on_*` methods. A more scalable way to handle events, especially from custom widgets, is to use **Actions**.
 
 An action is a method on your App or Widget prefixed with `action_`. You can bind these actions to key presses or have a widget invoke them.
@@ -34,10 +36,12 @@ class ActionApp(App):
         """Called when the user presses 'a'."""
         self.log(f"Added item: {item}")
 ```
--   `BINDINGS`: A class variable that defines key bindings. When the user presses 'q', Textual will look for and call a method named `action_quit`.
--   `action_*`: Any method with this prefix is an action that can be called.
+
+- `BINDINGS`: A class variable that defines key bindings. When the user presses 'q', Textual will look for and call a method named `action_quit`.
+- `action_*`: Any method with this prefix is an action that can be called.
 
 ### 2. State Management and Reactive Attributes
+
 In our `CounterApp` yesterday, we manually updated the display widget whenever the `counter` variable changed. This can get tedious. Textual provides **reactive attributes** that automatically trigger an update when their value changes.
 
 ```python
@@ -62,10 +66,12 @@ class ReactiveCounterApp(App):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         self.counter += 1 # This will automatically trigger watch_counter!
 ```
--   `reactive()`: A decorator that turns a class attribute into a reactive one.
--   `watch_<attribute_name>()`: A special method that Textual calls whenever the corresponding reactive attribute is modified. This is the core of Textual's data binding system.
+
+- `reactive()`: A decorator that turns a class attribute into a reactive one.
+- `watch_<attribute_name>()`: A special method that Textual calls whenever the corresponding reactive attribute is modified. This is the core of Textual's data binding system.
 
 ### 3. Creating Custom Widgets
+
 For reusability, you can create your own widgets by subclassing `textual.widget.Widget` or another existing widget. This lets you encapsulate a piece of UI and its logic.
 
 ```python
@@ -97,6 +103,7 @@ class CustomWidgetApp(App):
 ```
 
 ### 4. Managing Views with Screens
+
 For any non-trivial application, you'll need more than one "view" (e.g., a login screen, a main screen, a settings screen). Textual manages this with `Screen` objects.
 
 A `Screen` is like a self-contained mini-app with its own `compose` method, event handlers, and actions.
@@ -131,6 +138,7 @@ class MainApp(App):
 ```
 
 ## 🔹 Quick Exercise
+
 Create a custom widget `WelcomeWidget` that contains a `Static` label and an `Input` widget. When the user types their name into the input, the static label should update to say "Welcome, [Name]!".
 
 ```python
@@ -154,28 +162,34 @@ class WelcomeApp(App):
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Evolve yesterday's TUI to-do list into a more robust and interactive application.
 
 1.  **Create Custom Widgets**:
-    -   Create a custom widget called `TodoItem` (e.g., inheriting from `Static`). It should be responsible for displaying a single to-do item's text.
-    -   Create another custom widget called `TodoList` that is responsible for displaying a list of `TodoItem` widgets.
+
+    - Create a custom widget called `TodoItem` (e.g., inheriting from `Static`). It should be responsible for displaying a single to-do item's text.
+    - Create another custom widget called `TodoList` that is responsible for displaying a list of `TodoItem` widgets.
 
 2.  **Use Reactive Attributes**:
-    -   In your main `TodoApp`, create a reactive attribute `todos = reactive([])`. This list will be your single source of truth for the to-do items.
-    -   Create a `watch_todos` method. When the `todos` list changes, this method should be responsible for clearing and re-populating the `TodoList` widget.
+
+    - In your main `TodoApp`, create a reactive attribute `todos = reactive([])`. This list will be your single source of truth for the to-do items.
+    - Create a `watch_todos` method. When the `todos` list changes, this method should be responsible for clearing and re-populating the `TodoList` widget.
 
 3.  **Refactor 'Add' Functionality**:
-    -   When the "Add" button is pressed, instead of writing to the file and manually rebuilding the UI, you should simply append the new to-do text to the `self.todos` list. The reactive nature of the attribute will handle the UI update automatically.
+
+    - When the "Add" button is pressed, instead of writing to the file and manually rebuilding the UI, you should simply append the new to-do text to the `self.todos` list. The reactive nature of the attribute will handle the UI update automatically.
 
 4.  **Implement 'Done' Functionality using Actions**:
-    -   Add a "Done" `Button` to your `TodoItem` custom widget.
-    -   When this button is clicked, it should **post a message** (a custom event). For example: `self.post_message(self.TodoCompleted(item_text=self.text))`. You'll need to define `TodoCompleted` as a custom `Message` class.
-    -   In your main `TodoApp`, create an `on_todo_item_todo_completed` event handler. This handler will receive the message, find the corresponding item in the `self.todos` list, mark it as complete, and the reactive system will update the UI. This decouples the child widget from the parent application logic.
+
+    - Add a "Done" `Button` to your `TodoItem` custom widget.
+    - When this button is clicked, it should **post a message** (a custom event). For example: `self.post_message(self.TodoCompleted(item_text=self.text))`. You'll need to define `TodoCompleted` as a custom `Message` class.
+    - In your main `TodoApp`, create an `on_todo_item_todo_completed` event handler. This handler will receive the message, find the corresponding item in the `self.todos` list, mark it as complete, and the reactive system will update the UI. This decouples the child widget from the parent application logic.
 
 5.  **Data Persistence (Bonus)**:
-    -   Modify your app to load the to-do items from `todos.txt` when it starts up (`on_mount` event handler) and save the entire `self.todos` list back to the file whenever it changes (`watch_todos`).
+    - Modify your app to load the to-do items from `todos.txt` when it starts up (`on_mount` event handler) and save the entire `self.todos` list back to the file whenever it changes (`watch_todos`).
 
 ## 📖 Further Reading
+
 - [Textual Documentation: Reactive Attributes](https://textual.textualize.io/guide/reactivity/)
 - [Textual Documentation: Custom Widgets](https://textual.textualize.io/guide/widgets/#custom-widgets)
 - [Textual Documentation: Screens](https://textual.textualize.io/guide/screens/)

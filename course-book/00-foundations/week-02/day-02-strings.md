@@ -1,6 +1,7 @@
 # Week 2, Day 2: Strings & String Operations
 
 ## 🎯 Learning Objectives
+
 - [ ] Master various methods for creating and manipulating strings.
 - [ ] Use f-strings effectively for modern, readable string formatting.
 - [ ] Understand the basics of character encoding (ASCII vs. UTF-8).
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. String Creation and Literals
+
 Strings can be created with single (`'...'`), double (`"..."`), triple-single (`'''...'''`), or triple-double (`"""..."""`) quotes. Triple-quoted strings can span multiple lines.
 
 ```python
@@ -23,6 +25,7 @@ lines."""
 ```
 
 ### 2. F-strings for Formatting
+
 Introduced in Python 3.6, f-strings are the modern way to format strings. They are more readable and faster than older methods like `%`-formatting or `.format()`. You prefix the string with an `f` and embed expressions directly inside curly braces `{}`.
 
 ```python
@@ -40,9 +43,11 @@ print(f"Next year, I will be {age + 1}.")
 ```
 
 ### 3. String Methods
-Strings are objects with many useful methods. Since strings are immutable, these methods always return a *new* string and do not modify the original.
+
+Strings are objects with many useful methods. Since strings are immutable, these methods always return a _new_ string and do not modify the original.
 
 Here are a few common ones:
+
 - `.upper()`: Returns an uppercase version of the string.
 - `.lower()`: Returns a lowercase version.
 - `.strip()`: Removes leading/trailing whitespace.
@@ -61,10 +66,12 @@ joined_words: str = "-".join(words)      # "Hello-World!"
 ```
 
 ### 4. Unicode and Encoding
+
 Computers only understand numbers. Character encoding is a system that maps characters (like 'A', 'B', 'C') to numbers.
+
 - **ASCII**: An early standard that could only represent 128 characters (English letters, numbers, punctuation).
 - **Unicode**: A modern standard that can represent almost every character from every language in the world.
-- **UTF-8**: The most common way to *encode* Unicode characters into bytes that can be stored or transmitted. It's a variable-width encoding, making it efficient for English text while still supporting all Unicode characters.
+- **UTF-8**: The most common way to _encode_ Unicode characters into bytes that can be stored or transmitted. It's a variable-width encoding, making it efficient for English text while still supporting all Unicode characters.
 
 Python 3 strings are Unicode by default. When you write to a file or send data over a network, you must encode the string into bytes.
 
@@ -79,11 +86,13 @@ print(f"Decoded back to string: {decoded_string}")
 ```
 
 ### 5. Regular Expressions (`re` module)
+
 Regular expressions (regex) are a powerful mini-language for finding complex patterns in strings. Python's `re` module provides regex tools.
 
 Common `re` functions:
+
 - `re.search(pattern, string)`: Scans through the string looking for the first location where the pattern produces a match.
-- `re.match(pattern, string)`: Tries to apply the pattern at the *start* of the string.
+- `re.match(pattern, string)`: Tries to apply the pattern at the _start_ of the string.
 - `re.findall(pattern, string)`: Finds all substrings where the pattern matches and returns them as a list.
 - `re.sub(pattern, repl, string)`: Replaces occurrences of the pattern with a replacement string.
 
@@ -141,13 +150,13 @@ assert extract_email("No email here.") is None
 1.  **Create Project File**: In your `my-first-poetry-app` project, create a new file: `my_first_poetry_app/string_processor.py`.
 2.  **Implement 10 String Functions**: Create a file that contains at least 10 different functions that perform some kind of string operation. Each function must be fully type-annotated.
     - **Suggestions**:
-        - `reverse_string(s: str) -> str`: Reverses a string.
-        - `is_palindrome(s: str) -> bool`: Checks if a string is a palindrome.
-        - `count_vowels(s: str) -> int`: Counts the number of vowels.
-        - `censor_word(text: str, word: str) -> str`: Replaces a specific word with asterisks.
-        - `word_count(text: str) -> int`: Counts the number of words.
-        - `remove_whitespace(text: str) -> str`: Removes all whitespace characters.
-        - `snake_to_camel(s: str) -> str`: Converts "snake_case" to "camelCase".
+      - `reverse_string(s: str) -> str`: Reverses a string.
+      - `is_palindrome(s: str) -> bool`: Checks if a string is a palindrome.
+      - `count_vowels(s: str) -> int`: Counts the number of vowels.
+      - `censor_word(text: str, word: str) -> str`: Replaces a specific word with asterisks.
+      - `word_count(text: str) -> int`: Counts the number of words.
+      - `remove_whitespace(text: str) -> str`: Removes all whitespace characters.
+      - `snake_to_camel(s: str) -> str`: Converts "snake_case" to "camelCase".
 3.  **Add Regex Validation**:
     - Implement a function `is_valid_email(email: str) -> bool` that uses a regular expression to check if a string is a valid email format.
     - Implement a function `is_valid_phone_number(phone: str) -> bool` for a simple US phone number format (e.g., `XXX-XXX-XXXX`).
@@ -160,7 +169,9 @@ assert extract_email("No email here.") is None
     - Run the linter: `poetry run ruff check . --fix` and fix all issues.
 
 ## ⚠️ Common Mistakes
-- **Modifying strings in place**: Forgetting that string methods return a *new* string.
+
+- **Modifying strings in place**: Forgetting that string methods return a _new_ string.
+
   ```python
   # Wrong
   my_str = "  hello  "
@@ -172,11 +183,13 @@ assert extract_email("No email here.") is None
   my_str = my_str.strip()
   print(my_str) # "hello"
   ```
+
 - **Confusing `re.search` and `re.match`**: `re.match` only looks at the very beginning of the string, while `re.search` looks anywhere in the string. `search` is usually what you want.
 - **Raw strings for regex patterns**: Forgetting to use raw strings (`r"..."`) for regex patterns. Without the `r` prefix, backslashes in the pattern can be misinterpreted by Python as escape sequences.
 - **Unicode errors**: Reading a file with the wrong encoding can lead to a `UnicodeDecodeError`. Always be explicit about encoding when dealing with files, e.g., `open('file.txt', 'r', encoding='utf-8')`.
 
 ## 📖 Further Reading
+
 - [Python Docs: String Methods](https://docs.python.org/3/library/stdtypes.html#string-methods)
 - [Python Docs: `re` — Regular expression operations](https://docs.python.org/3/library/re.html)
 - [Real Python: F-Strings in Python](https://realpython.com/python-f-strings/)

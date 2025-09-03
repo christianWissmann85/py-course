@@ -1,6 +1,7 @@
 # Week 2, Day 4: Loops & Iteration
 
 ## 🎯 Learning Objectives
+
 - [ ] Write type-safe `for` and `while` loops.
 - [ ] Understand the concept of iterables and how Python's `for` loop uses them.
 - [ ] Use `enumerate()` and `zip()` to write cleaner, more Pythonic loops.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. `for` Loops with Types
+
 The `for` loop in Python iterates over the items of any sequence or iterable. When using type hints, the type checker knows the type of the item being iterated over.
 
 ```python
@@ -20,6 +22,7 @@ for name in names:
 ```
 
 ### 2. `while` Loops Safely
+
 A `while` loop repeats as long as a condition is true. It's powerful but carries the risk of creating an infinite loop if the condition never becomes false.
 
 ```python
@@ -39,11 +42,13 @@ while counter > 0:
 ```
 
 ### 3. Iterables and Sequences
+
 An **iterable** is any Python object capable of returning its members one at a time. Examples include all sequence types (like `list`, `str`, and `tuple`) and some non-sequence types (like `dict` and `set`). The `for` loop can iterate over any iterable.
 
 A **sequence** is a specific type of iterable that supports efficient element access using integer indices via the `__getitem__()` special method. `list`, `tuple`, `range` and `str` are examples.
 
 ### 4. `enumerate`, `zip`, and `range`
+
 These are essential built-in functions for writing better loops.
 
 - **`range(stop)` or `range(start, stop, step)`**: Generates a sequence of numbers, perfect for looping a specific number of times.
@@ -73,10 +78,12 @@ These are essential built-in functions for writing better loops.
   ```
 
 ### 5. `break`, `continue`, and `else` in Loops
+
 These statements give you more control over your loops.
+
 - **`break`**: Immediately exits the innermost loop.
 - **`continue`**: Skips the rest of the current iteration and proceeds to the next one.
-- **`else`**: The `else` block runs only if the loop completes *without* encountering a `break` statement. This is a unique and useful feature of Python's loops.
+- **`else`**: The `else` block runs only if the loop completes _without_ encountering a `break` statement. This is a unique and useful feature of Python's loops.
 
 ```python
 # Example combining break and else
@@ -127,22 +134,24 @@ assert parallel_lists(['a'], [1, 2, 3]) == [('a', 1)] # zip stops at the shortes
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Implement several classic algorithms using loops.
 
 1.  **Create Project File**: In `my-first-poetry-app`, create a new file: `my_first_poetry_app/algorithms.py`.
 2.  **Implement 5 Algorithms**: Write 5 functions, each implementing a simple algorithm. Ensure all are fully type-annotated.
     - **Suggestions**:
-        - `find_max(numbers: list[int]) -> int | None`: Finds the maximum value in a list. Return `None` if the list is empty.
-        - `linear_search(items: list[str], target: str) -> int | None`: Finds the index of a target string in a list. Return `None` if not found. Use `enumerate`.
-        - `reverse_list(items: list[int]) -> list[int]`: Returns a new list with the items in reverse order. Do not use the built-in `reverse()` method or `[::-1]` slicing. Use a `while` loop or a `for` loop with `range`.
-        - `is_prime(n: int) -> bool`: Checks if a number is prime. Use a `for` loop with `break` and `else`. A number `n` is prime if it's not divisible by any number from 2 to `sqrt(n)`.
-        - `factorial(n: int) -> int`: Calculates the factorial of a non-negative integer using a loop.
+      - `find_max(numbers: list[int]) -> int | None`: Finds the maximum value in a list. Return `None` if the list is empty.
+      - `linear_search(items: list[str], target: str) -> int | None`: Finds the index of a target string in a list. Return `None` if not found. Use `enumerate`.
+      - `reverse_list(items: list[int]) -> list[int]`: Returns a new list with the items in reverse order. Do not use the built-in `reverse()` method or `[::-1]` slicing. Use a `while` loop or a `for` loop with `range`.
+      - `is_prime(n: int) -> bool`: Checks if a number is prime. Use a `for` loop with `break` and `else`. A number `n` is prime if it's not divisible by any number from 2 to `sqrt(n)`.
+      - `factorial(n: int) -> int`: Calculates the factorial of a non-negative integer using a loop.
 3.  **Create a `main` function**:
     - Write a `main()` function that demonstrates each of your algorithm functions.
     - Use a variety of inputs to test them.
 4.  **Verify**: Run your script (`poetry run python ...`), type checker (`poetry run mypy .`), and linter (`poetry run ruff check .`) and fix all issues.
 
 ## ⚠️ Common Mistakes
+
 - **Modifying a list while iterating over it**: This can lead to unpredictable behavior, like skipping items.
   ```python
   # Wrong - can lead to bugs!
@@ -151,12 +160,13 @@ assert parallel_lists(['a'], [1, 2, 3]) == [('a', 1)] # zip stops at the shortes
       if num % 2 == 0:
           numbers.remove(num) # Modifying the list you're looping over
   ```
-  Instead, create a new list or iterate over a *copy* (`for num in numbers[:]`).
+  Instead, create a new list or iterate over a _copy_ (`for num in numbers[:]`).
 - **Off-by-one errors**: When using `range`, it's easy to be off by one. Remember `range(5)` goes from 0 to 4. `range(len(my_list))` is a common pattern, but `enumerate` is often cleaner.
 - **Unnecessary `while` loops**: `while` loops are powerful, but `for` loops are generally safer and more readable for iterating over existing data. Use `while` when the number of iterations isn't known beforehand.
-- **Forgetting the `else` on a loop is tied to `break`**: The `else` block on a loop is not like the `else` in an `if` statement. It only runs if the loop terminates *naturally* (not via `break`). This is a common point of confusion.
+- **Forgetting the `else` on a loop is tied to `break`**: The `else` block on a loop is not like the `else` in an `if` statement. It only runs if the loop terminates _naturally_ (not via `break`). This is a common point of confusion.
 
 ## 📖 Further Reading
+
 - [Real Python: Python "for" Loops (Definite Iteration)](https://realpython.com/python-for-loop/)
 - [Real Python: Python "while" Loops (Indefinite Iteration)](https://realpython.com/python-while-loop/)
 - [Trey Hunner: The `for...else` statement is a great, underused Python feature](https://treyhunner.com/2019/05/python-for-else/)

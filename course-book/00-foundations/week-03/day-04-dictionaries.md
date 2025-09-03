@@ -1,6 +1,7 @@
 # Week 3, Day 4: Dictionaries & TypedDict
 
 ## 🎯 Learning Objectives
+
 - [ ] Master the creation, access, and modification of dictionaries.
 - [ ] Use `TypedDict` to provide a static type definition for dictionary structures.
 - [ ] Understand the role of hashing in what can be used as a dictionary key.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. Dictionary Basics
+
 A dictionary (`dict`) is an unordered (in Python < 3.7) or insertion-ordered (Python 3.7+) collection of key-value pairs. Each key in a dictionary must be unique and hashable (e.g., `str`, `int`, `float`, `tuple`).
 
 ```python
@@ -26,9 +28,11 @@ user_name: str | int = user_profile["name"] # "Alice"
 user_profile["level"] = 6
 user_profile["email"] = "alice@example.com"
 ```
+
 The type hint `dict[KeyType, ValueType]` defines the expected types for keys and values.
 
 ### 2. Dictionary Methods
+
 - `.get(key, default=None)`: Safely get a value by key. Returns `None` (or a specified default) if the key doesn't exist, instead of raising a `KeyError`.
 - `.keys()`: Returns a view of the dictionary's keys.
 - `.values()`: Returns a view of the dictionary's values.
@@ -45,7 +49,8 @@ phone: str | int | None = user_profile.get("phone") # None
 ```
 
 ### 3. `TypedDict` for Structure
-A standard `dict` type hint doesn't specify *which* keys should be present. `TypedDict` solves this. It lets you define a "shape" that a dictionary should have, and MyPy will enforce it.
+
+A standard `dict` type hint doesn't specify _which_ keys should be present. `TypedDict` solves this. It lets you define a "shape" that a dictionary should have, and MyPy will enforce it.
 
 ```python
 from typing import TypedDict
@@ -66,10 +71,13 @@ user1: User = {
 # MyPy will flag an error if a key is missing or has the wrong type
 # user2: User = {"user_id": 102, "name": "Charlie"} # Error: missing "email"
 ```
+
 This is incredibly useful for working with data from APIs or databases.
 
 ### 4. `defaultdict` and `Counter`
+
 The `collections` module provides specialized dictionary subclasses.
+
 - `defaultdict`: When you access a missing key, it creates a default value for it instead of raising a `KeyError`.
 - `Counter`: A `dict` subclass for counting hashable objects.
 
@@ -90,6 +98,7 @@ print(fruit_counts.most_common(1)) # [('apple', 3)]
 ```
 
 ### 5. Dictionary Comprehensions & Hashing
+
 Like list and set comprehensions, dict comprehensions provide a concise way to create dictionaries.
 
 ```python
@@ -97,6 +106,7 @@ Like list and set comprehensions, dict comprehensions provide a concise way to c
 squares_dict: dict[int, int] = {x: x*x for x in range(5)}
 # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
 ```
+
 Dictionaries are fast for lookups (`my_dict[key]`) because they use a technique called **hashing**. Python runs the key through a hash function to compute an index where the value should be stored in memory. This is why keys must be **hashable** (i.e., immutable). All of Python's built-in immutable types (`int`, `str`, `tuple`, `frozenset`) are hashable.
 
 ## 🔹 Quick Exercise
@@ -132,6 +142,7 @@ print("Merge successful!")
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a simple in-memory key-value data store using dictionaries and `TypedDict`.
 
 1.  **Create Project File**: In `my-first-poetry-app`, create a new file: `my_first_poetry_app/data_store.py`.
@@ -151,12 +162,14 @@ print("Merge successful!")
 6.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **`KeyError`**: Accessing a key that doesn't exist using square brackets (`my_dict['non_existent_key']`). Use `my_dict.get('non_existent_key')` or check `if key in my_dict:` to prevent this.
 - **Modifying a dictionary while iterating over it**: This can raise a `RuntimeError`. If you need to add or remove items while looping, iterate over a copy of the keys: `for key in list(my_dict.keys()):`.
 - **Assuming key order**: In modern Python (3.7+), dictionaries preserve insertion order. However, this is a relatively new feature. Code that needs to run on older versions should not rely on this. If order is critical and you need to support older Python, use `collections.OrderedDict`.
 - **Using mutable keys**: `my_dict[[1, 2]] = 'value'` will raise a `TypeError` because lists are not hashable. You must use an immutable type like a tuple: `my_dict[(1, 2)] = 'value'`.
 
 ## 📖 Further Reading
+
 - [Real Python: Dictionaries in Python](https://realpython.com/python-dicts/)
 - [Python Docs: `typing.TypedDict`](https://docs.python.org/3/library/typing.html#typing.TypedDict)
 - [Python Docs: `collections` — Container datatypes](https://docs.python.org/3/library/collections.html) (Read about `defaultdict` and `Counter`)

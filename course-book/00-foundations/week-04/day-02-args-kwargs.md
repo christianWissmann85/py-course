@@ -1,6 +1,7 @@
-# Week 4, Day 2: *args and **kwargs
+# Week 4, Day 2: \*args and \*\*kwargs
 
 ## 🎯 Learning Objectives
+
 - [ ] Write functions that can accept an arbitrary number of positional arguments (`*args`).
 - [ ] Write functions that can accept an arbitrary number of keyword arguments (`**kwargs`).
 - [ ] Understand how to use the unpacking operators (`*` and `**`) to pass arguments to other functions.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. `*args`: Arbitrary Positional Arguments
+
 Sometimes you want a function to accept any number of positional arguments. You can do this with the `*args` syntax. Inside the function, `args` will be a **tuple** containing all the positional arguments that were passed.
 
 ```python
@@ -26,9 +28,11 @@ def sum_all(*numbers: int) -> int:
 print(sum_all(1, 2, 3))       # Output: 6
 print(sum_all(10, 20, 30, 40)) # Output: 100
 ```
+
 The name `args` is just a convention; `*my_numbers` would also work. The `*` is the important part.
 
 ### 2. `**kwargs`: Arbitrary Keyword Arguments
+
 Similarly, `**kwargs` allows a function to accept any number of keyword arguments. Inside the function, `kwargs` will be a **dictionary** containing the argument names as keys and their values.
 
 ```python
@@ -46,10 +50,13 @@ display_attributes(name="Laptop", price="1200", status="In Stock")
 #  - price: 1200
 #  - status: In Stock
 ```
+
 The name `kwargs` is also a convention. The `**` is what makes it work.
 
 ### 3. The Unpacking Operators (`*` and `**`)
-The `*` and `**` symbols can also be used when *calling* a function. This is known as unpacking.
+
+The `*` and `**` symbols can also be used when _calling_ a function. This is known as unpacking.
+
 - `*` unpacks a sequence (like a list or tuple) into positional arguments.
 - `**` unpacks a dictionary into keyword arguments.
 
@@ -71,6 +78,7 @@ describe_item(**item_details_dict) # Same as describe_item(name="Milk", price=3.
 ```
 
 ### 4. Forwarding Arguments
+
 A common use case for `*args` and `**kwargs` is to write a wrapper function that "forwards" all its arguments to another function. This is the core principle behind decorators, which we'll learn about tomorrow.
 
 ```python
@@ -91,6 +99,7 @@ logger(describe_item, "Cheese", price=5.00, quantity=1)
 ```
 
 ### 5. Advanced Typing with `TypeVarTuple` (Python 3.11+)
+
 For very advanced cases, Python 3.11 introduced `TypeVarTuple` which allows you to type the arguments in `*args` with more precision. This is beyond the scope of our foundations but is good to be aware of.
 
 ## 🔹 Quick Exercise
@@ -125,6 +134,7 @@ assert create_dict() == {}
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a flexible API-like function that can create different types of objects.
 
 1.  **Create Project File**: In `my-first-poetry-app`, create a new file: `my_first_poetry_app/flexible_api.py`.
@@ -135,24 +145,26 @@ assert create_dict() == {}
     - Create a single function `create_entity(entity_type: str, **kwargs: Any) -> User | Product | None`.
     - This function takes a string `entity_type` (`"user"` or `"product"`) and arbitrary keyword arguments (`**kwargs`).
     - **Inside the function**:
-        - If `entity_type` is `"user"`, it should expect `username` and `email` in `kwargs` and return a `User` dictionary.
-        - If `entity_type` is `"product"`, it should expect `product_name` and `price` in `kwargs` and return a `Product` dictionary.
-        - If `entity_type` is unknown, it should return `None`.
-        - Use `.get()` to safely access keys from `kwargs` to avoid errors if they are missing.
+      - If `entity_type` is `"user"`, it should expect `username` and `email` in `kwargs` and return a `User` dictionary.
+      - If `entity_type` is `"product"`, it should expect `product_name` and `price` in `kwargs` and return a `Product` dictionary.
+      - If `entity_type` is unknown, it should return `None`.
+      - Use `.get()` to safely access keys from `kwargs` to avoid errors if they are missing.
 4.  **Implement a "Client" Function**:
     - Create a function `register_new_user(user_details: dict[str, Any]) -> User | None`.
     - This function takes a dictionary of user details.
     - It should use the `**` unpacking operator to call `create_entity`, passing `"user"` as the type and the `user_details` dictionary as the keyword arguments.
 5.  **`main()` function**:
     - Demonstrate your functions:
-        - Call `create_entity` directly to create a product.
-        - Create a user details dictionary and pass it to `register_new_user` to create a user.
-        - Call `create_entity` with an invalid type to show it returns `None`.
+      - Call `create_entity` directly to create a product.
+      - Create a user details dictionary and pass it to `register_new_user` to create a user.
+      - Call `create_entity` with an invalid type to show it returns `None`.
     - Print all the created entities.
 6.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Order of parameters**: A function's parameters must be in this order: standard positional, `*args`, keyword-only, `**kwargs`.
+
   ```python
   # Correct order
   def f(a, b, *args, kw_only, **kwargs): ...
@@ -160,13 +172,15 @@ assert create_dict() == {}
   # Incorrect order (e.g., *args after **kwargs)
   # def f(a, **kwargs, *args): ... # SyntaxError
   ```
+
 - **Confusing `*` on definition vs. call**:
-  - In `def f(*args):`, `*` *gathers* arguments into a tuple.
-  - In `f(*my_list)`, `*` *unpacks* the list into arguments.
+  - In `def f(*args):`, `*` _gathers_ arguments into a tuple.
+  - In `f(*my_list)`, `*` _unpacks_ the list into arguments.
 - **Using `args` or `kwargs` directly**: Remember `args` is a tuple and `kwargs` is a dict. To access the first positional argument, you use `args[0]`. To access a keyword argument named `user`, you use `kwargs['user']`.
 - **Poor typing**: Typing `*args` as `Any` is easy but provides no type safety. Be as specific as you can, e.g., `*args: int`.
 
 ## 📖 Further Reading
+
 - [Real Python: Python `*args` and `**kwargs`](https://realpython.com/python-args-kwargs/)
 - [Trey Hunner: `*args` and `**kwargs` in Python Explained](https://treyhunner.com/2018/04/keyword-arguments-in-python/)
 - [Python Docs: Unpacking Argument Lists](https://docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists)

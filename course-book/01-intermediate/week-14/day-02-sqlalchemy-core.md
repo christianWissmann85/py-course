@@ -1,6 +1,7 @@
 # Week 14, Day 2: SQLAlchemy Core
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the architecture of SQLAlchemy and the difference between Core and ORM.
 - [ ] Learn to connect to a database using an `Engine`.
 - [ ] Define database tables as Python objects using `Table` and `MetaData`.
@@ -10,16 +11,18 @@
 ## 📚 Concepts
 
 ### 1. SQLAlchemy Architecture: Core vs. ORM
+
 SQLAlchemy is a powerful SQL toolkit and Object-Relational Mapper (ORM). It's designed in two distinct layers:
 
--   **SQLAlchemy Core**: This is the foundation. It provides a **SQL Expression Language** which allows you to represent database structures (like tables and columns) and SQL queries as Python objects and expressions. It gives you fine-grained control and is very close to writing raw SQL, but in a Pythonic, type-safe, and vendor-neutral way.
--   **SQLAlchemy ORM**: This is built on top of Core. It allows you to map your own custom Python classes (e.g., `User`, `Post`) directly to database tables. It handles the "object-relational mapping" so you can work with your database primarily through your Python objects. We will cover the ORM tomorrow.
+- **SQLAlchemy Core**: This is the foundation. It provides a **SQL Expression Language** which allows you to represent database structures (like tables and columns) and SQL queries as Python objects and expressions. It gives you fine-grained control and is very close to writing raw SQL, but in a Pythonic, type-safe, and vendor-neutral way.
+- **SQLAlchemy ORM**: This is built on top of Core. It allows you to map your own custom Python classes (e.g., `User`, `Post`) directly to database tables. It handles the "object-relational mapping" so you can work with your database primarily through your Python objects. We will cover the ORM tomorrow.
 
 Today, we focus on **Core**, which is excellent for when you want the power of SQL without being tied to a specific database's syntax and while still getting the benefits of Python's structure and type safety.
 
 First, install it: `poetry add sqlalchemy`
 
 ### 2. The Engine and Connection
+
 The `Engine` is the starting point for any SQLAlchemy application. It establishes a pool of database connections to a specific database.
 
 ```python
@@ -39,6 +42,7 @@ with engine.connect() as connection:
 ```
 
 ### 3. Defining Table Metadata
+
 In SQLAlchemy Core, you define your database tables using `Table` objects, which are collected in a `MetaData` object. This creates a Python representation of your database schema.
 
 ```python
@@ -72,6 +76,7 @@ metadata_obj.create_all(engine)
 ```
 
 ### 4. The SQL Expression Language
+
 This is the heart of SQLAlchemy Core. Instead of writing SQL strings, you build queries using Python expressions.
 
 ```python
@@ -107,6 +112,7 @@ stmt = delete(users_table).where(users_table.c.name == "Bob")
 ```
 
 ### 5. Transactions
+
 SQLAlchemy uses a "commit as you go" approach. You must explicitly start and end transactions. The `Connection` object provides this.
 
 ```python
@@ -132,6 +138,7 @@ with engine.connect() as conn:
 ```
 
 ## 🔹 Quick Exercise
+
 Using the `users_table` defined in the concepts, write a SQLAlchemy Core expression to select the email of the user with an `id` of 1.
 
 ```python
@@ -150,31 +157,33 @@ stmt = select(users_table.c.email).where(users_table.c.id == 1)
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a data access layer for the "To-Do List" application from yesterday using SQLAlchemy Core.
 
 1.  **Setup**:
-    -   Create a new file `todo_db.py`.
-    -   Add `sqlalchemy` to your project: `poetry add sqlalchemy`. You will also need a database driver. For SQLite, none is needed. For PostgreSQL, you'd add `psycopg2-binary`.
+    - Create a new file `todo_db.py`.
+    - Add `sqlalchemy` to your project: `poetry add sqlalchemy`. You will also need a database driver. For SQLite, none is needed. For PostgreSQL, you'd add `psycopg2-binary`.
 2.  **Define Schema**:
-    -   Inside `todo_db.py`, define a `todos` table using `Table`, `MetaData`, and `Column`.
-    -   The table should have columns for `id` (integer, primary key), `title` (string, not nullable), and `completed` (boolean, default to `False`).
+    - Inside `todo_db.py`, define a `todos` table using `Table`, `MetaData`, and `Column`.
+    - The table should have columns for `id` (integer, primary key), `title` (string, not nullable), and `completed` (boolean, default to `False`).
 3.  **Create a `Database` Class**:
-    -   Create a class `Database` that takes a database URL in its constructor and creates an `Engine`.
-    -   Add a method `create_db_tables()` that uses `metadata.create_all()` to create the tables.
+    - Create a class `Database` that takes a database URL in its constructor and creates an `Engine`.
+    - Add a method `create_db_tables()` that uses `metadata.create_all()` to create the tables.
 4.  **Implement CRUD Functions**:
-    -   Add methods to your `Database` class for each CRUD operation. These methods should use the SQLAlchemy Expression Language, not raw SQL strings.
-        -   `add_todo(self, title: str) -> int`: Adds a new todo and returns its new ID.
-        -   `get_all_todos(self) -> list[dict]`: Returns a list of all todos. Each todo should be a dictionary-like object.
-        -   `get_todo_by_id(self, todo_id: int) -> dict | None`: Returns a single todo or `None`.
-        -   `update_todo_status(self, todo_id: int, completed: bool) -> None`: Updates a todo's status.
-        -   `delete_todo(self, todo_id: int) -> None`: Deletes a todo.
+    - Add methods to your `Database` class for each CRUD operation. These methods should use the SQLAlchemy Expression Language, not raw SQL strings.
+      - `add_todo(self, title: str) -> int`: Adds a new todo and returns its new ID.
+      - `get_all_todos(self) -> list[dict]`: Returns a list of all todos. Each todo should be a dictionary-like object.
+      - `get_todo_by_id(self, todo_id: int) -> dict | None`: Returns a single todo or `None`.
+      - `update_todo_status(self, todo_id: int, completed: bool) -> None`: Updates a todo's status.
+      - `delete_todo(self, todo_id: int) -> None`: Deletes a todo.
 5.  **Use Transactions**: Ensure that your write operations (`add`, `update`, `delete`) are wrapped in transactions.
 6.  **Create a Main Script**: Create a `main.py` to test your `Database` class. It should:
-    -   Instantiate the `Database` class with a SQLite URL (`sqlite:///todos.db`).
-    -   Call `create_db_tables()`.
-    -   Add a few todos, print them all, update one, get it again, delete it, and finally print all remaining todos.
+    - Instantiate the `Database` class with a SQLite URL (`sqlite:///todos.db`).
+    - Call `create_db_tables()`.
+    - Add a few todos, print them all, update one, get it again, delete it, and finally print all remaining todos.
 
 ## 📖 Further Reading
+
 - [SQLAlchemy 2.0 Unified Tutorial](https://docs.sqlalchemy.org/en/20/tutorial/index.html) (The new official tutorial is excellent)
 - [SQLAlchemy Core - Data and Schema](https://docs.sqlalchemy.org/en/20/core/metadata.html)
 - [SQLAlchemy Core - Expression Language](https://docs.sqlalchemy.org/en/20/core/expression_api.html)

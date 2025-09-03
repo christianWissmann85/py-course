@@ -1,6 +1,7 @@
 # Week 4, Day 4: Generators & Iterators
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the difference between an iterable and an iterator.
 - [ ] Create your own generator functions using the `yield` keyword.
 - [ ] Use generator expressions for a concise, memory-efficient way to create iterators.
@@ -9,13 +10,16 @@
 ## 📚 Concepts
 
 ### 1. The Iterator Protocol
+
 Before we can understand generators, we must understand iterators.
+
 - **Iterable**: An object that you can loop over (like a `list`, `str`, `dict`). It has an `__iter__` method that returns an iterator.
 - **Iterator**: An object that represents a stream of data. It has a `__next__` method that returns the next item in the stream. When there are no more items, it raises a `StopIteration` exception.
 
 A `for` loop implicitly calls `__iter__` on an iterable to get an iterator, and then calls `__next__` on that iterator until `StopIteration` is raised.
 
 ### 2. Generator Functions and `yield`
+
 A **generator function** is a simpler way to create an iterator. Instead of writing a full class with `__iter__` and `__next__`, you just write a function that uses the `yield` keyword.
 
 When a generator function is called, it returns a **generator object** (a type of iterator). The function's code does not run at this point. Each time `__next__` is called on the generator object (e.g., by a `for` loop), the function's code executes until it hits a `yield` statement. The `yield`ed value is returned, and the function's state is paused. The next time `__next__` is called, it resumes right where it left off.
@@ -40,7 +44,9 @@ print(type(my_generator)) # <class 'generator'>
 for number in my_generator:
     print(f"Yielded: {number}")
 ```
+
 Output:
+
 ```
 <class 'generator'>
 Starting countdown!
@@ -49,9 +55,11 @@ Yielded: 2
 Yielded: 1
 Countdown finished!
 ```
+
 The key benefit is **lazy evaluation**. The values are generated one at a time, on demand, which is incredibly memory-efficient for large datasets.
 
 ### 3. Generator Expressions
+
 A generator expression is a high-performance, memory-efficient generalization of list comprehensions. The syntax is just like a list comprehension, but with parentheses `()` instead of square brackets `[]`.
 
 It creates a generator object without creating the full list in memory.
@@ -71,9 +79,11 @@ print(gen_expr)  # <generator object <genexpr> at 0x...>
 for value in gen_expr:
     print(value, end=' ') # 0 1 4 9 ... 81
 ```
+
 Use a generator expression when you are iterating over the result immediately and don't need to store the entire list.
 
 ### 4. `yield from`
+
 The `yield from` statement allows one generator to delegate part of its operations to another generator. It's a clean way to chain iterables together.
 
 ```python
@@ -88,6 +98,7 @@ for item in combined_generator():
 ```
 
 ### 5. Infinite Generators
+
 Because generators are lazy, you can even create generators that produce an infinite sequence of values. You just need to be careful to use `break` or some other condition to stop iterating over them.
 
 ```python
@@ -142,6 +153,7 @@ assert next(chunk_gen) == [7]
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a small data processing pipeline using a toolkit of generator functions.
 
 1.  **Create Project File**: In `my-first-poetry-app`, create `my_first_poetry_app/pipeline.py`.
@@ -151,19 +163,20 @@ assert next(chunk_gen) == [7]
     - `uppercase_lines(lines: Generator[str, None, None]) -> Generator[str, None, None]`: Takes a generator of lines and yields uppercase versions of them.
 3.  **Create a Data Pipeline**:
     - In a `main` function:
-        - First, create a large dummy log file (e.g., 100,000 lines) to test with. Some lines should contain the word "ERROR".
-        - Create a processing pipeline by chaining your generators together:
-          ```python
-          # Pseudocode
-          lines = read_large_file("dummy.log")
-          error_lines = filter_lines(lines, "ERROR")
-          processed_lines = uppercase_lines(error_lines)
-          ```
-        - Iterate over the final `processed_lines` generator and print each line to the console.
+      - First, create a large dummy log file (e.g., 100,000 lines) to test with. Some lines should contain the word "ERROR".
+      - Create a processing pipeline by chaining your generators together:
+        ```python
+        # Pseudocode
+        lines = read_large_file("dummy.log")
+        error_lines = filter_lines(lines, "ERROR")
+        processed_lines = uppercase_lines(error_lines)
+        ```
+      - Iterate over the final `processed_lines` generator and print each line to the console.
 4.  **Analyze**: Add comments to your code explaining why this generator-based approach is more memory-efficient than reading the whole file into a list, then filtering it into a new list, etc.
 5.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Confusing a generator function with a normal function**: Calling a generator function does not run its code; it returns a generator object. The code only runs when you iterate over the generator (e.g., with a `for` loop or `next()`).
 - **Storing the result of a generator expression**:
   ```python
@@ -176,6 +189,7 @@ assert next(chunk_gen) == [7]
 - **Overusing list comprehensions**: When working with very large datasets that you only need to iterate over once, a generator expression is almost always better than a list comprehension to save memory.
 
 ## 📖 Further Reading
+
 - [Real Python: Python Generators 101](https://realpython.com/introduction-to-python-generators/)
 - [Python Docs: `yield` expressions](https://docs.python.org/3/reference/expressions.html#yield-expressions)
 - [PEP 255 -- Simple Generators](https://peps.python.org/pep-0255/)

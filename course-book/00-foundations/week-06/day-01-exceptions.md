@@ -1,6 +1,7 @@
 # Week 6, Day 1: Exception Handling
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the concept of exceptions for error handling.
 - [ ] Use `try...except` blocks to gracefully handle runtime errors.
 - [ ] Use the `finally` and `else` clauses to execute code under specific conditions.
@@ -9,12 +10,15 @@
 ## 📚 Concepts
 
 ### 1. What is an Exception?
+
 An exception is an event, which occurs during the execution of a program, that disrupts the normal flow of the program's instructions. When a Python script raises an exception, it must either be handled immediately or it will terminate the program.
 
 Instead of writing code that checks for every possible error condition with `if` statements, we can write the "happy path" code and handle the exceptions when they occur. This is often described as "It's easier to ask for forgiveness than permission" (EAFP), as opposed to "Look before you leap" (LBYL).
 
 ### 2. The `try...except` Block
+
 The core of exception handling is the `try...except` block.
+
 - **`try`**: The code that might raise an exception is placed inside the `try` block.
 - **`except`**: If an exception occurs in the `try` block, Python looks for a matching `except` block to handle it.
 
@@ -28,10 +32,13 @@ except ZeroDivisionError as e:
 
 print("Program continues after the error.")
 ```
+
 You can catch multiple exceptions by listing them in a tuple: `except (ValueError, TypeError):`. You can also have multiple `except` blocks to handle different exceptions differently.
 
 ### 3. The `else` and `finally` Clauses
+
 The `try` statement can have two optional final clauses:
+
 - **`else`**: The code in the `else` block is executed only if the `try` block completes **without raising an exception**. This is useful for code that should run only when the `try` part was successful.
 - **`finally`**: The code in the `finally` block is **always executed**, whether an exception occurred or not. This is perfect for cleanup actions, like closing a file or a network connection.
 
@@ -52,7 +59,9 @@ safe_get_from_dict(my_dict, "b") # Runs `except` and `finally`
 ```
 
 ### 4. Python's Exception Hierarchy
+
 Exceptions are objects that inherit from a base class, `BaseException`. Most exceptions you'll deal with inherit from the `Exception` class. Some common ones:
+
 - `Exception`
   - `AttributeError`: Raised when an attribute reference or assignment fails.
   - `KeyError`: Raised when a dictionary key is not found.
@@ -64,6 +73,7 @@ Exceptions are objects that inherit from a base class, `BaseException`. Most exc
 You can catch a parent exception to handle all of its child exceptions. For example, `except LookupError:` will catch both `KeyError` and `IndexError`.
 
 ### 5. Exception Chaining
+
 When you catch an exception and raise a new one, Python 3 automatically chains them. The original exception is stored in the `__cause__` attribute of the new exception. This provides valuable context when debugging.
 
 ```python
@@ -121,6 +131,7 @@ assert safe_divide(10, "a") is None
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Refactor a simple script to make it robust by adding comprehensive error handling.
 
 1.  **Create Project File**: In your `my-first-poetry-app` project, create a new file: `my_first_poetry_app/robust_script.py`.
@@ -129,7 +140,7 @@ assert safe_divide(10, "a") is None
     - This function will take a list of user dictionaries, where each dict is supposed to have a `"name"` (str) and `"age"` (int).
     - The function should loop through the list and print a summary for each user, like `f"{user['name']} will be {user['age'] + 5} in five years."`
 3.  **Add Error Handling**:
-    - The input data might be messy. Use `try...except` blocks inside your loop to handle potential errors for each user dictionary *without* crashing the entire loop.
+    - The input data might be messy. Use `try...except` blocks inside your loop to handle potential errors for each user dictionary _without_ crashing the entire loop.
     - Handle `KeyError` if the `"name"` or `"age"` key is missing.
     - Handle `TypeError` or `ValueError` if the `age` is not a number.
     - In each `except` block, print a helpful error message indicating which user record failed and why.
@@ -147,14 +158,16 @@ assert safe_divide(10, "a") is None
 5.  **Verify**: The script should run to completion without crashing, printing success messages for valid records and error messages for invalid ones. Ensure it also passes `mypy` and `ruff`.
 
 ## ⚠️ Common Mistakes
+
 - **Catching `Exception` too broadly**: `except Exception:` will catch almost every possible error. This can hide bugs and make it hard to debug. It's almost always better to catch specific exceptions (`except ValueError:`) so you know exactly what went wrong.
 - **Ignoring the exception**: `except: pass` is one of the most dangerous patterns in Python. It silently swallows the error, leaving you with no idea that something went wrong. At the very least, log the error.
 - **Confusing `TypeError` and `ValueError`**:
-  - `TypeError`: The *type* of the object is wrong for the operation (e.g., `len(123)`).
-  - `ValueError`: The *type* is right, but the *value* is wrong (e.g., `int("abc")`).
+  - `TypeError`: The _type_ of the object is wrong for the operation (e.g., `len(123)`).
+  - `ValueError`: The _type_ is right, but the _value_ is wrong (e.g., `int("abc")`).
 - **Putting too much code in the `try` block**: Only include the specific lines of code that might raise the exception you want to handle. Code that can't raise that exception should be outside the `try` block (often in the `else` block).
 
 ## 📖 Further Reading
+
 - [Python Docs: Errors and Exceptions](https://docs.python.org/3/tutorial/errors.html)
 - [Real Python: Python `try...except`](https://realpython.com/python-try-except/)
 - [Python Docs: Built-in Exceptions](https://docs.python.org/3/library/exceptions.html#exception-hierarchy) (The full hierarchy)

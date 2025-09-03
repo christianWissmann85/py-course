@@ -1,6 +1,7 @@
 # Week 8, Day 1: Advanced File I/O
 
 ## 🎯 Learning Objectives
+
 - [ ] Master the different file modes for reading, writing, and appending.
 - [ ] Understand how context managers (`with` statement) ensure files are properly closed.
 - [ ] Correctly handle text file encodings to prevent errors.
@@ -9,7 +10,9 @@
 ## 📚 Concepts
 
 ### 1. File Modes
+
 When you `open()` a file, you specify a mode. We've used `"r"` (read) and `"w"` (write), but there are others:
+
 - **`"r"`**: Read (default). Raises an error if the file doesn't exist.
 - **`"w"`**: Write. Creates the file if it doesn't exist, **truncates (erases) the file if it exists**.
 - **`"a"`**: Append. Creates the file if it doesn't exist, and adds new data to the end of the file if it does.
@@ -18,6 +21,7 @@ When you `open()` a file, you specify a mode. We've used `"r"` (read) and `"w"` 
 - **`"+"`**: Update (reading and writing). Add this to other modes (e.g., `"r+"`, `"w+"`).
 
 ### 2. Context Managers (`with` statement)
+
 As we've seen, the `with open(...) as f:` syntax is the standard way to work with files. The `with` statement creates a **context manager**.
 
 The primary benefit is that it **guarantees the file will be closed** (`f.close()` is called automatically) when the block is exited, even if an exception occurs inside the block. This prevents resource leaks.
@@ -38,7 +42,9 @@ finally:
 ```
 
 ### 3. Encodings
+
 Text files are stored as bytes. An **encoding** is the rule that maps text characters to bytes.
+
 - `utf-8` is the modern standard and can represent any Unicode character.
 - `ascii` is an older, 7-bit encoding for English characters only.
 - `cp1252` is a common legacy encoding on Windows.
@@ -66,6 +72,7 @@ except UnicodeDecodeError as e:
 ```
 
 ### 4. Binary Operations
+
 To work with non-text files like images, sounds, or executables, you must use binary mode. You do this by adding `'b'` to the mode string (e.g., `'rb'` for read-binary, `'wb'` for write-binary).
 
 In binary mode, read operations return `bytes` objects, and you must write `bytes` objects.
@@ -83,7 +90,9 @@ with open("data.bin", "rb") as f:
 ```
 
 ### 5. File Seeking
+
 You can move the "cursor" within a file using the `.seek()` method. This is useful for jumping to specific parts of a file without reading everything in between.
+
 - `f.seek(offset, whence)`
   - `offset`: The number of bytes to move.
   - `whence`: The reference point. `0` (default) for the start of the file, `1` for the current position, `2` for the end of the file.
@@ -137,33 +146,36 @@ except StopIteration:
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a simple file utility that can copy a file, handling text and binary modes correctly.
 
 1.  **Create Project File**: In your project, create a new file: `my_first_poetry_app/file_copier.py`.
 2.  **Implement the `copy_file` function**:
-    -   `copy_file(source_path: str, dest_path: str, is_binary: bool = False) -> None`.
-    -   The function should determine the correct mode (`"r"`/`"w"` or `"rb"`/`"wb"`) based on the `is_binary` flag.
-    -   It should open the source file for reading and the destination file for writing.
-    -   To be memory-efficient, it should read the source file in chunks (like in the Quick Exercise) and write each chunk to the destination file.
+    - `copy_file(source_path: str, dest_path: str, is_binary: bool = False) -> None`.
+    - The function should determine the correct mode (`"r"`/`"w"` or `"rb"`/`"wb"`) based on the `is_binary` flag.
+    - It should open the source file for reading and the destination file for writing.
+    - To be memory-efficient, it should read the source file in chunks (like in the Quick Exercise) and write each chunk to the destination file.
 3.  **Add Error Handling**:
-    -   Use `try...except` to handle `FileNotFoundError` if the source file doesn't exist.
-    -   Handle any other potential `IOError`.
-    -   Use logging to report success, errors, and which mode (text/binary) is being used.
+    - Use `try...except` to handle `FileNotFoundError` if the source file doesn't exist.
+    - Handle any other potential `IOError`.
+    - Use logging to report success, errors, and which mode (text/binary) is being used.
 4.  **Create a `main` function for demonstration**:
-    -   Create a sample text file (`source.txt`).
-    -   Call `copy_file` to copy it to `dest.txt`. Verify the contents.
-    -   Create a sample binary file (e.g., `source.bin` with some random bytes: `os.urandom(100)`).
-    -   Call `copy_file` with `is_binary=True` to copy it to `dest.bin`. Verify the contents.
-    -   Demonstrate your error handling by trying to copy a file that doesn't exist.
+    - Create a sample text file (`source.txt`).
+    - Call `copy_file` to copy it to `dest.txt`. Verify the contents.
+    - Create a sample binary file (e.g., `source.bin` with some random bytes: `os.urandom(100)`).
+    - Call `copy_file` with `is_binary=True` to copy it to `dest.bin`. Verify the contents.
+    - Demonstrate your error handling by trying to copy a file that doesn't exist.
 5.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Forgetting binary mode for non-text files**: Reading an image or executable in text mode (`"r"`) will result in a `UnicodeDecodeError` or corrupted data because the file's bytes don't conform to a valid text encoding.
-- **Reading large files into memory**: `file.read()` reads the *entire* file into memory. This is fine for small files, but for large ones (gigabytes), it will crash your program. Always process large files line-by-line or chunk-by-chunk.
+- **Reading large files into memory**: `file.read()` reads the _entire_ file into memory. This is fine for small files, but for large ones (gigabytes), it will crash your program. Always process large files line-by-line or chunk-by-chunk.
 - **Hardcoding file encodings**: While `utf-8` is the best default, sometimes you have to work with legacy files. If so, make the encoding a parameter of your function rather than hardcoding it.
 - **Path manipulation with strings**: Using `+` to join path components (`dir + "/" + filename`) is not cross-platform. Always use `pathlib.Path` and the `/` operator.
 
 ## 📖 Further Reading
+
 - [Real Python: Reading and Writing Files in Python](https://realpython.com/read-write-files-python/)
 - [Python Docs: `open()` built-in function](https://docs.python.org/3/library/functions.html#open)
 - [Python Docs: `pathlib` module](https://docs.python.org/3/library/pathlib.html)

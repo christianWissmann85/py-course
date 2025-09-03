@@ -1,6 +1,7 @@
 # Week 8, Day 5: Database Basics (SQLite)
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand what a database is and why SQLite is a useful starting point.
 - [ ] Use Python's built-in `sqlite3` module to connect to a database.
 - [ ] Execute SQL queries to create tables, insert data, and retrieve data.
@@ -9,12 +10,15 @@
 ## 📚 Concepts
 
 ### 1. SQLite Basics
+
 A database is an organized collection of data. A relational database (which uses SQL - Structured Query Language) organizes data into tables with rows and columns.
 
 **SQLite** is a C library that provides a lightweight, disk-based database that doesn’t require a separate server process. It's built into Python and is perfect for learning, prototyping, and small to medium-sized applications. The entire database is stored in a single `.db` file.
 
 ### 2. Connection and Cursor
+
 To interact with an SQLite database, you need two objects:
+
 - **Connection**: Represents your connection to the database file.
 - **Cursor**: An object used to execute SQL queries and fetch results.
 
@@ -32,9 +36,11 @@ cur = con.cursor()
 # Always close the connection when you're done.
 con.close()
 ```
+
 A `with` statement is the best way to handle connections, as it automatically handles committing or rolling back transactions and closing the connection.
 
 ### 3. Executing SQL Queries
+
 You use the cursor's `.execute()` method to run SQL commands.
 
 ```python
@@ -63,14 +69,17 @@ with sqlite3.connect("my_database.db") as con:
     user = res.fetchone() # Fetches one row
     print(user) # ('Alice', 'alice@example.com')
 ```
+
 **Security Note**: Never use f-strings to put values into an SQL query. This is vulnerable to **SQL injection**. Always use the `?` placeholder style.
 
 ### 4. Transactions
+
 A **transaction** is a sequence of operations performed as a single logical unit of work. All operations in a transaction must complete successfully, or none of them are applied. This is known as **atomicity**.
 
 In Python's `sqlite3` module, a transaction is implicitly opened when you make your first data-modifying statement (like `INSERT` or `UPDATE`). To save the changes to the database, you must call `connection.commit()`. To undo them, you call `connection.rollback()`.
 
 The `with con:` statement simplifies this:
+
 - If the `with` block completes successfully, it automatically calls `commit()`.
 - If an exception occurs inside the `with` block, it automatically calls `rollback()`.
 
@@ -90,6 +99,7 @@ except sqlite3.IntegrityError as e:
 ```
 
 ### 5. Best Practices
+
 - **Use `with` statements**: Always manage your connections with a `with` block.
 - **Use placeholders (`?`)**: Never format queries with f-strings.
 - **Fetch what you need**: `fetchone()` gets one row, `fetchall()` gets all rows as a list (which can use a lot of memory), or you can simply iterate over the cursor (`for row in cur:`).
@@ -135,44 +145,49 @@ con.close()
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a simple database application to manage a "to-do" list.
 
 1.  **Create Project File**: In your project, create `my_first_poetry_app/todo_db.py`.
 2.  **Setup Function**:
-    -   Write a `setup_database(db_path: str) -> None` function that connects to the database and creates a `todos` table if it doesn't exist. The table should have `id` (integer primary key), `task` (text, not null), and `is_complete` (integer, 0 or 1).
+    - Write a `setup_database(db_path: str) -> None` function that connects to the database and creates a `todos` table if it doesn't exist. The table should have `id` (integer primary key), `task` (text, not null), and `is_complete` (integer, 0 or 1).
 3.  **CRUD Functions**: Implement the four "CRUD" (Create, Read, Update, Delete) operations:
-    -   `add_task(db_path: str, task_text: str) -> None`
-    -   `get_all_tasks(db_path: str) -> list[tuple]`: Should return a list of all task rows.
-    -   `mark_task_complete(db_path: str, task_id: int) -> None`
-    -   `delete_task(db_path: str, task_id: int) -> None`
-    -   All these functions should connect to the database, perform their operation, and close the connection. Use `with sqlite3.connect(...)` to manage transactions.
+    - `add_task(db_path: str, task_text: str) -> None`
+    - `get_all_tasks(db_path: str) -> list[tuple]`: Should return a list of all task rows.
+    - `mark_task_complete(db_path: str, task_id: int) -> None`
+    - `delete_task(db_path: str, task_id: int) -> None`
+    - All these functions should connect to the database, perform their operation, and close the connection. Use `with sqlite3.connect(...)` to manage transactions.
 4.  **`main()` function**:
-    -   Call `setup_database`.
-    -   Add a few tasks.
-    -   List all tasks.
-    -   Mark one task as complete.
-    -   Delete a task.
-    -   List the remaining tasks.
+    - Call `setup_database`.
+    - Add a few tasks.
+    - List all tasks.
+    - Mark one task as complete.
+    - Delete a task.
+    - List the remaining tasks.
 5.  **Verify**: Run the script, type checker, and linter.
 
 ## 📦 Week 8 Capstone: Multi-Format Data Processor
+
 This is the final project for the Foundations phase! You will combine everything you've learned to build a tool that processes data from multiple formats (JSON, CSV, XML) and stores the results in an SQLite database.
 
 **Key Requirements**:
--   Read data from multiple source formats.
--   Perform validation and transformation.
--   Store the clean, standardized data in an SQLite database.
--   Be fully type-safe and have a good test suite.
+
+- Read data from multiple source formats.
+- Perform validation and transformation.
+- Store the clean, standardized data in an SQLite database.
+- Be fully type-safe and have a good test suite.
 
 See `week-08-capstone-project.md` for a more detailed breakdown.
 
 ## ⚠️ Common Mistakes
+
 - **SQL Injection**: The most critical error. Never use string formatting to create queries with user-supplied data.
 - **Forgetting to `commit()`**: If you don't use a `with` statement, you must manually call `connection.commit()` or your changes will be lost when the connection is closed.
 - **Fetching large result sets**: Calling `.fetchall()` on a query that returns millions of rows can exhaust your system's memory. Iterating over the cursor (`for row in cur:`) is usually safer.
 - **Mixing up `fetchone()` and `fetchall()`**: `fetchone()` returns a single row or `None`. `fetchall()` returns a list of all rows (which might be empty). Using one when you expect the other is a common bug.
 
 ## 📖 Further Reading
+
 - [Python Docs: `sqlite3` — DB-API 2.0 interface for SQLite databases](https://docs.python.org/3/library/sqlite3.html)
 - [Real Python: Using `sqlite3` in Python](https://realpython.com/python-sqlite-sqlalchemy/)
 - [SQLite Tutorial](https://www.sqlitetutorial.net/) (A great resource for learning SQL syntax specific to SQLite)

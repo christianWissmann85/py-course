@@ -1,6 +1,7 @@
 # Week 6, Day 3: Logging
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand why logging is superior to using `print()` for debugging and monitoring.
 - [ ] Use Python's built-in `logging` module to record events.
 - [ ] Differentiate between the five standard logging levels.
@@ -9,7 +10,9 @@
 ## 📚 Concepts
 
 ### 1. Why Logging?
+
 While `print()` is great for quick debugging, it has major limitations in larger applications:
+
 - You can't easily turn print statements on or off.
 - You can't control the "severity" of a message (e.g., debug vs. critical error).
 - You can't easily direct messages to different places (console, file, network).
@@ -17,6 +20,7 @@ While `print()` is great for quick debugging, it has major limitations in larger
 The `logging` module solves all of these problems. It's a powerful and configurable system for recording events from your application.
 
 ### 2. Logging Levels
+
 The logging module provides five standard levels of severity. When you configure a logger, you set a minimum level; any message with a severity below that level will be ignored.
 
 - **`DEBUG`**: Detailed information, typically of interest only when diagnosing problems.
@@ -38,7 +42,9 @@ logging.critical("This is a critical message.")
 ```
 
 ### 3. Loggers, Handlers, and Formatters
+
 The logging system is built on three main components:
+
 - **Loggers**: The entry point into the logging system. You get a logger instance (`logging.getLogger(__name__)`) and call methods on it (`.info()`, `.warning()`, etc.). Using `__name__` creates a logger named after the current module, which is a best practice.
 - **Handlers**: These send the log records to the appropriate destination.
   - `StreamHandler`: Sends logs to a stream, like the console (`sys.stdout`).
@@ -46,6 +52,7 @@ The logging system is built on three main components:
 - **Formatters**: These specify the layout of the log records. You can include the timestamp, level name, logger name, and the message itself.
 
 ### 4. Basic Configuration
+
 `logging.basicConfig()` is a quick way to set up the root logger, but for more control, you configure a logger object directly.
 
 ```python
@@ -75,9 +82,11 @@ log.debug("This message will NOT appear, because the level is set to INFO.")
 ```
 
 ### 5. Best Practices
+
 - **Use `logging.getLogger(__name__)`**: Always create a logger instance named after your module. This lets you configure logging for different parts of your application independently.
 - **Log what, not how**: Log messages should describe the event, not the implementation detail. Good: `"User authentication failed for user 'alice'"`. Bad: `"Function 'authenticate' returned False"`.
 - **Don't use string formatting**: Pass data as arguments to the logging methods. The logger will only format the string if the message is actually going to be processed, which is more efficient.
+
   ```python
   # Good, efficient way
   log.info("User %s logged in from IP %s", username, ip_address)
@@ -128,6 +137,7 @@ my_app_logger.warning("This is a warning.")
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Integrate logging into the robust script you built on Day 1.
 
 1.  **Refactor `robust_script.py`**: Open the script you created for Day 1's assignment (`robust_script.py`).
@@ -138,9 +148,9 @@ my_app_logger.warning("This is a warning.")
 3.  **Replace `print` with Logging**:
     - Go through your `process_user_data` function.
     - Replace all `print()` calls with appropriate logging calls:
-        - Successful processing messages should be `log.info()`.
-        - Error messages inside `except` blocks should be `log.error()` or `log.warning()`.
-        - Add `log.debug()` messages to show more detail, like the specific user dictionary being processed.
+      - Successful processing messages should be `log.info()`.
+      - Error messages inside `except` blocks should be `log.error()` or `log.warning()`.
+      - Add `log.debug()` messages to show more detail, like the specific user dictionary being processed.
 4.  **Add Logging for Analysis**:
     - At the end of the script, after the loop is done, log a summary message at the `INFO` level. e.g., `f"Processed {total_records} records. {success_count} successful, {failure_count} failed."`
 5.  **Run and Verify**:
@@ -148,11 +158,13 @@ my_app_logger.warning("This is a warning.")
     - Open `processing.log`. Verify that it contains the `DEBUG` messages as well.
 
 ## ⚠️ Common Mistakes
+
 - **Calling `basicConfig` after getting a logger**: `logging.basicConfig()` only works if the root logger has not already been configured. If you call `getLogger()` first, `basicConfig()` does nothing.
 - **Adding handlers multiple times**: If you run a setup function multiple times, you might add the same handler to a logger repeatedly, which will cause your log messages to be duplicated. Check if a logger already has handlers before adding more: `if not logger.handlers: ...`.
 - **Using the root logger directly**: Calling `logging.info()` uses the root logger. While fine for simple scripts, in libraries or larger applications, it's better to get your own logger with `logging.getLogger(__name__)` so that the application using your library can control its log output.
 
 ## 📖 Further Reading
+
 - [Python Docs: Logging HOWTO](https://docs.python.org/3/howto/logging.html) (The essential guide)
 - [Python Docs: `logging` module reference](https://docs.python.org/3/library/logging.html)
 - [Real Python: Logging in Python](https://realpython.com/python-logging/)

@@ -1,6 +1,7 @@
 # Week 1, Day 5: VS Code & Git Setup
 
 ## 🎯 Learning Objectives
+
 - [ ] Configure Visual Studio Code with essential extensions for a powerful Python development experience.
 - [ ] Understand and configure workspace settings in VS Code for consistency.
 - [ ] Learn the fundamentals of Git for version control.
@@ -9,46 +10,51 @@
 ## 📚 Concepts
 
 ### 1. Essential VS Code Extensions
+
 VS Code is a lightweight but powerful code editor. Its power comes from its vast ecosystem of extensions. For this course, these are essential:
+
 - **Python (from Microsoft)**: The official extension. Provides IntelliSense (autocompletion), debugging, and environment selection.
 - **Pylance (from Microsoft)**: A high-performance language server included with the Python extension, offering rich type information and smart suggestions.
 - **Ruff (from Astral)**: Integrates the Ruff linter and formatter directly into the editor, showing you errors and formatting issues as you type.
 - **MyPy Type Checker (from Matan Borenraout)**: A separate extension that runs MyPy in the background and displays type errors in your code.
 
 ### 2. Workspace Settings (`.vscode/settings.json`)
+
 You can configure VS Code settings globally (for all projects) or locally (for the current project/workspace). Workspace settings are stored in a `.vscode/settings.json` file and should be committed to version control so that everyone on the team has the same editor configuration.
 
 A good `settings.json` for our projects would be:
+
 ```json
 {
-    // --- General Editor Settings ---
-    "files.trimTrailingWhitespace": true,
+  // --- General Editor Settings ---
+  "files.trimTrailingWhitespace": true,
 
-    // --- Python Specific Settings ---
-    "python.testing.pytestEnabled": true,
-    "python.testing.pytestArgs": [
-        "tests"
-    ],
+  // --- Python Specific Settings ---
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["tests"],
 
-    // --- Ruff & Formatting Settings ---
-    "[python]": {
-        "editor.defaultFormatter": "charliermarsh.ruff",
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit",
-            "source.organizeImports": "explicit"
-        }
-    },
-    "ruff.importStrategy": "fromEnvironment",
+  // --- Ruff & Formatting Settings ---
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "ruff.importStrategy": "fromEnvironment",
 
-    // --- MyPy Settings ---
-    "mypy-type-checker.importStrategy": "fromEnvironment"
+  // --- MyPy Settings ---
+  "mypy-type-checker.importStrategy": "fromEnvironment"
 }
 ```
+
 This configuration tells VS Code to use Ruff as the default formatter, to format your code every time you save, to enable pytest, and more.
 
 ### 3. Git Fundamentals
+
 Git is a distributed version control system. It's the industry standard for tracking changes in source code. Key concepts:
+
 - **Repository (repo)**: A project's folder, containing all files and their history.
 - **Commit**: A snapshot of your files at a specific point in time.
 - **Branch**: An independent line of development. The main branch is usually called `main` or `master`.
@@ -58,7 +64,9 @@ Git is a distributed version control system. It's the industry standard for trac
 - **`git pull`**: Downloads changes from a remote repository.
 
 ### 4. GitHub Integration
+
 GitHub is a web platform that hosts Git repositories. It provides tools for collaboration, code review (Pull Requests), issue tracking, and automation (GitHub Actions). The typical workflow is:
+
 1. Create a repository on GitHub.
 2. Clone it to your local machine.
 3. Make changes locally on a new branch.
@@ -66,10 +74,12 @@ GitHub is a web platform that hosts Git repositories. It provides tools for coll
 5. Open a Pull Request (PR) to merge your changes into the `main` branch.
 
 ### 5. `.gitignore`
+
 This is a crucial file in any Git project. It tells Git which files or directories it should ignore and not track. This is used for:
+
 - Virtual environment folders (Poetry creates them outside the project by default, which is good).
 - Python bytecode files (`__pycache__/`, `*.pyc`).
-- IDE configuration folders (`.vscode/` *can* be ignored, but `settings.json` is often useful to share).
+- IDE configuration folders (`.vscode/` _can_ be ignored, but `settings.json` is often useful to share).
 - Secret files or environment variables (`.env`).
 
 A good `.gitignore` for a Python project can be generated from [gitignore.io](https://www.toptal.com/developers/gitignore/api/python,vscode,linux).
@@ -77,6 +87,7 @@ A good `.gitignore` for a Python project can be generated from [gitignore.io](ht
 ## 💻 Code Examples
 
 ### Basic Git Workflow
+
 ```bash
 # --- One-time setup ---
 # Configure your name and email for Git
@@ -109,6 +120,7 @@ git push -u origin main
 ```
 
 ### Daily Git Workflow (Branching)
+
 ```bash
 # Start on the main branch, make sure it's up to date
 git checkout main
@@ -157,7 +169,7 @@ git push origin feature/add-user-login
     - Runs `poetry install`.
     - Runs `poetry run ruff check .`.
     - Runs `poetry run mypy .`.
-    Commit and push this file. Watch it run in the "Actions" tab on GitHub.
+      Commit and push this file. Watch it run in the "Actions" tab on GitHub.
 
 ## 📦 Week 1 Project: Development Environment Documentation
 
@@ -178,14 +190,14 @@ This project combines your learning from the entire week and produces a valuable
 
 ## ⚠️ Common Mistakes
 
--   **Committing secrets**: Never commit files containing passwords, API keys, or other secrets. Use environment variables or a secrets management tool, and add the file paths (e.g., `.env`) to your `.gitignore`.
--   **Making large, unrelated commits**: A commit should be a small, logical unit of change. Don't mix a new feature, a bug fix, and a documentation update into one commit.
--   **Working directly on the `main` branch**: This is a major anti-pattern. Always create a new branch for your work. This keeps the `main` branch stable and allows for code review via Pull Requests.
--   **Not writing descriptive commit messages**: A message like "fix bug" is useless. A good message is in the imperative mood, e.g., "Fix: Prevent crash when user has no profile image."
+- **Committing secrets**: Never commit files containing passwords, API keys, or other secrets. Use environment variables or a secrets management tool, and add the file paths (e.g., `.env`) to your `.gitignore`.
+- **Making large, unrelated commits**: A commit should be a small, logical unit of change. Don't mix a new feature, a bug fix, and a documentation update into one commit.
+- **Working directly on the `main` branch**: This is a major anti-pattern. Always create a new branch for your work. This keeps the `main` branch stable and allows for code review via Pull Requests.
+- **Not writing descriptive commit messages**: A message like "fix bug" is useless. A good message is in the imperative mood, e.g., "Fix: Prevent crash when user has no profile image."
 
 ## 📖 Further Reading
 
--   [Pro Git Book](https://git-scm.com/book/en/v2) (The definitive guide to Git)
--   [GitHub's "Hello World" Guide](https://docs.github.com/en/get-started/quickstart/hello-world)
--   [VS Code Docs for Python](https://code.visualstudio.com/docs/python/python-tutorial)
--   [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (A popular specification for commit messages)
+- [Pro Git Book](https://git-scm.com/book/en/v2) (The definitive guide to Git)
+- [GitHub's "Hello World" Guide](https://docs.github.com/en/get-started/quickstart/hello-world)
+- [VS Code Docs for Python](https://code.visualstudio.com/docs/python/python-tutorial)
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (A popular specification for commit messages)

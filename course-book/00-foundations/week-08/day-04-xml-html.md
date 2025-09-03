@@ -1,6 +1,7 @@
 # Week 8, Day 4: XML & HTML Processing
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the basic structure of XML documents.
 - [ ] Use Python's built-in `xml.etree.ElementTree` module to parse and query XML data.
 - [ ] Write basic XPath queries to find specific elements in an XML tree.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. XML Basics
+
 XML (eXtensible Markup Language) is a markup language designed to store and transport data. Unlike HTML, it doesn't have predefined tags. You define your own tags to describe your data. It represents data in a tree structure.
 
 ```xml
@@ -24,11 +26,13 @@ XML (eXtensible Markup Language) is a markup language designed to store and tran
     </settings>
 </config>
 ```
+
 - **Tags**: `<tag>` and `</tag>` define elements.
 - **Elements**: The content between tags (e.g., `<name>Alice</name>`).
 - **Attributes**: Key-value pairs inside the opening tag (e.g., `enabled="true"`).
 
 ### 2. `xml.etree.ElementTree`
+
 Python's standard library includes `ElementTree` for working with XML. It represents the entire XML document as a tree, and each element as a node.
 
 - `ET.parse(filepath)`: Parses an XML document from a file.
@@ -66,7 +70,9 @@ if notif_element is not None:
 ```
 
 ### 3. XPath Queries
+
 The path string used in `.find()` and `.findall()` is a simplified version of **XPath**. XPath is a powerful language for navigating elements and attributes in an XML document.
+
 - `.` selects the current node.
 - `//` selects nodes from the current node that match the selection, no matter where they are.
 - `[@attrib]` selects elements with a specific attribute.
@@ -77,9 +83,11 @@ all_enabled = root.findall(".//*[@enabled]")
 for elem in all_enabled:
     print(f"Found an element with 'enabled' attribute: {elem.tag}")
 ```
+
 Full XPath support requires third-party libraries like `lxml`.
 
 ### 4. HTML Processing with BeautifulSoup
+
 HTML looks like XML, but it's often "messy" and doesn't follow strict XML rules. Trying to parse real-world HTML with an XML parser will often fail.
 
 The standard tool for parsing HTML in Python is a third-party library called **BeautifulSoup**. It's designed to be lenient and handle malformed HTML gracefully.
@@ -105,9 +113,11 @@ link = soup.find('a', class_='link')
 if link:
     print(link['href']) # http://example.com/link
 ```
+
 BeautifulSoup is essential for any web scraping task.
 
 ### 5. Generating XML
+
 You can also use `ElementTree` to build XML documents programmatically.
 
 ```python
@@ -164,11 +174,12 @@ print("XML parsing successful!")
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Build a tool that reads data from one XML format and writes it to another.
 
 1.  **Create Project Files**:
-    -   `my_first_poetry_app/xml_transformer.py`
-    -   A sample input file, `input_data.xml`.
+    - `my_first_poetry_app/xml_transformer.py`
+    - A sample input file, `input_data.xml`.
 2.  **Define Input XML Format**: Create `input_data.xml` with a list of products.
     ```xml
     <products>
@@ -190,26 +201,28 @@ print("XML parsing successful!")
     </inventory>
     ```
 4.  **Implement the Transformer**:
-    -   Write a function `transform_xml(input_path: str, output_path: str) -> None`.
-    -   **Parse**: Use `ET.parse()` to read and parse `input_data.xml`.
-    -   **Build**: Create a new XML tree in the target format.
-        -   Create the `<inventory>` root element.
-        -   Loop through each `<product>` in the source tree.
-        -   For each product, create a new `<item>` element.
-        -   Extract the `id`, `name`, and `price` from the source product and set them as *attributes* on the new `<item>` element.
-    -   **Write**: Use `ET.ElementTree(new_root).write(output_path)` to save the new XML file.
+    - Write a function `transform_xml(input_path: str, output_path: str) -> None`.
+    - **Parse**: Use `ET.parse()` to read and parse `input_data.xml`.
+    - **Build**: Create a new XML tree in the target format.
+      - Create the `<inventory>` root element.
+      - Loop through each `<product>` in the source tree.
+      - For each product, create a new `<item>` element.
+      - Extract the `id`, `name`, and `price` from the source product and set them as _attributes_ on the new `<item>` element.
+    - **Write**: Use `ET.ElementTree(new_root).write(output_path)` to save the new XML file.
 5.  **`main()` function**:
-    -   Call your `transform_xml` function.
-    -   Read the generated output file and print its content to verify it's correct.
+    - Call your `transform_xml` function.
+    - Read the generated output file and print its content to verify it's correct.
 6.  **Verify**: Run the script, type checker, and linter.
 
 ## ⚠️ Common Mistakes
+
 - **Using XML parsers for HTML**: This will often fail on real-world websites. HTML can be messy, and parsers like BeautifulSoup are designed to handle it. Use the right tool for the job.
 - **Ignoring namespaces**: Real-world XML often uses namespaces (e.g., `<ns1:tag>`). This complicates XPath queries. You have to register the namespace with a prefix to search correctly. This is an advanced topic but a common stumbling block.
-- **Forgetting `.text`**: `root.find('name')` returns the *element* object. To get the content inside, you need to access its `.text` attribute.
+- **Forgetting `.text`**: `root.find('name')` returns the _element_ object. To get the content inside, you need to access its `.text` attribute.
 - **XPath complexity**: The simplified XPath in `ElementTree` is limited. For complex queries (e.g., finding elements based on their text content), you'll need to use a more powerful library like `lxml`.
 
 ## 📖 Further Reading
+
 - [Python Docs: `xml.etree.ElementTree`](https://docs.python.org/3/library/xml.etree.elementtree.html)
 - [Real Python: Processing XML in Python](https://realpython.com/python-xml-parser/)
 - [Beautiful Soup Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)

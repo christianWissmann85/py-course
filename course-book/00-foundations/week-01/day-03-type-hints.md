@@ -1,6 +1,7 @@
 # Week 1, Day 3: Type Hints & MyPy
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand the difference between static and dynamic typing.
 - [ ] Learn to write basic type annotations for variables and functions.
 - [ ] Configure MyPy for strict type checking in a Poetry project.
@@ -9,6 +10,7 @@
 ## 📚 Concepts
 
 ### 1. Static vs. Dynamic Typing
+
 Python is a dynamically typed language. This means you don't have to declare the type of a variable when you create it. The interpreter figures it out at runtime.
 
 ```python
@@ -22,6 +24,7 @@ Static typing, found in languages like Java or C++, requires you to declare vari
 Python introduced **type hints** (or type annotations) to bring the benefits of static typing to a dynamic language. They are optional "hints" that don't affect how the code runs, but can be checked by external tools like **MyPy**.
 
 ### 2. Basic Type Annotations
+
 You can add type hints to variables, function arguments, and function return values.
 
 - **Variables**: `variable_name: type = value`
@@ -42,6 +45,7 @@ def greet(name: str, is_excited: bool = False) -> str:
 ```
 
 ### 3. MyPy Configuration
+
 MyPy is the de-facto standard type checker for Python. It reads your type hints and reports any inconsistencies. For this course, we will use it in its strictest mode to catch the maximum number of potential bugs.
 
 You can configure MyPy in your `pyproject.toml` file:
@@ -58,7 +62,9 @@ strict = true
 To run MyPy, you use `poetry run mypy .` from the root of your project.
 
 ### 4. Common Type Errors
+
 MyPy will help you find errors like:
+
 - `error: Incompatible types in assignment (expression has type "int", variable has type "str")`
 - `error: Argument 1 to "add" has incompatible type "str"; expected "int"`
 - `error: Missing return statement`
@@ -67,6 +73,7 @@ MyPy will help you find errors like:
 Learning to read and understand these errors is a fundamental skill.
 
 ### 5. Benefits of Type Safety
+
 - **Fewer Bugs**: Catches a whole class of errors before you even run your code.
 - **Improved Readability**: Type hints make code easier to understand and serve as documentation.
 - **Better Tooling**: IDEs like VS Code use type hints to provide better autocompletion and error highlighting.
@@ -76,6 +83,7 @@ Learning to read and understand these errors is a fundamental skill.
 ## 💻 Code Examples
 
 ### A function before and after typing
+
 ```python
 # Before (dynamic)
 def calculate_total(items):
@@ -123,7 +131,8 @@ def find_user(user_id, user_list):
             return user
     # What happens if the user is not found?
 ```
-*Hint for #4: Look up `Optional` from the `typing` module.*
+
+_Hint for #4: Look up `Optional` from the `typing` module._
 
 ## 📝 Daily Assignment
 
@@ -141,13 +150,13 @@ def find_user(user_id, user_list):
 
 ## ⚠️ Common Mistakes
 
--   **Using `list` instead of `List`**: For older Python versions (pre 3.9), you must import `List`, `Dict`, `Tuple` etc., from the `typing` module. In modern Python (3.9+), you can use the lowercase built-in types `list[int]` and `dict[str, int]`, which is preferred.
--   **Ignoring MyPy errors**: It's tempting to ignore MyPy's complaints, especially when the code "seems to work". This defeats the purpose. Treat MyPy errors as seriously as you would treat a syntax error.
--   **Forgetting to type function return values**: It's easy to type all the arguments but forget the `-> ReturnType:` part. `mypy --strict` will catch this.
--   **Using `Any` as a crutch**: `Any` tells the type checker to "allow anything". While sometimes necessary, overusing it is a sign of poorly typed code. Try to be as specific as possible.
+- **Using `list` instead of `List`**: For older Python versions (pre 3.9), you must import `List`, `Dict`, `Tuple` etc., from the `typing` module. In modern Python (3.9+), you can use the lowercase built-in types `list[int]` and `dict[str, int]`, which is preferred.
+- **Ignoring MyPy errors**: It's tempting to ignore MyPy's complaints, especially when the code "seems to work". This defeats the purpose. Treat MyPy errors as seriously as you would treat a syntax error.
+- **Forgetting to type function return values**: It's easy to type all the arguments but forget the `-> ReturnType:` part. `mypy --strict` will catch this.
+- **Using `Any` as a crutch**: `Any` tells the type checker to "allow anything". While sometimes necessary, overusing it is a sign of poorly typed code. Try to be as specific as possible.
 
 ## 📖 Further Reading
 
--   [MyPy Documentation](https://mypy.readthedocs.io/en/stable/)
--   [Typing module documentation (Python 3.12)](https://docs.python.org/3/library/typing.html)
--   [Real Python: Python Type Checking Guide](https://realpython.com/python-type-checking/)
+- [MyPy Documentation](https://mypy.readthedocs.io/en/stable/)
+- [Typing module documentation (Python 3.12)](https://docs.python.org/3/library/typing.html)
+- [Real Python: Python Type Checking Guide](https://realpython.com/python-type-checking/)

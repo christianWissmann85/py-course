@@ -1536,9 +1536,9 @@ class TechDebt:
 
 ---
 
-## 📅 PHASE 4: SPECIALIZATION (Weeks 25-36)
+## 📅 PHASE 4: BACKEND (Weeks 25-36)
 
-### Weeks 25-30: Backend Engineering
+### Topics
 
 - Advanced FastAPI
 - GraphQL
@@ -1547,7 +1547,9 @@ class TechDebt:
 - Distributed systems
 - Cloud services (AWS/GCP)
 
-#### Weeks 31-36: Machine Learning Engineering
+## 📅 PHASE 5: Machine Learning Engineering (Weeks 36-42)
+
+### Topics
 
 - NumPy/Pandas mastery
 - Scikit-learn
@@ -1555,11 +1557,3 @@ class TechDebt:
 - Model training
 - MLOps
 - Model deployment
-
-### Weeks 36-40: Integration & Mastery
-
-- System design
-- Architecture reviews
-- Open source contributions
-- Interview preparation
-- Final portfolio

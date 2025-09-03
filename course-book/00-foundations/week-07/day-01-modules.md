@@ -1,6 +1,7 @@
 # Week 7, Day 1: The Module System
 
 ## 🎯 Learning Objectives
+
 - [ ] Understand that every Python file is a module.
 - [ ] Use various forms of the `import` statement to use code from other modules.
 - [ ] Understand the purpose of the `if __name__ == "__main__":` block.
@@ -9,11 +10,13 @@
 ## 📚 Concepts
 
 ### 1. What are Modules?
+
 In Python, a **module** is simply a file containing Python definitions and statements. The file name is the module name with the suffix `.py` appended. Modules allow you to logically organize your Python code into separate files, making it more manageable and reusable.
 
 When you write `import my_file`, Python looks for a file named `my_file.py` and makes its contents available to you.
 
 ### 2. The `import` Statement
+
 There are several ways to import code from a module.
 
 ```python
@@ -44,10 +47,13 @@ from math_utils import area_of_circle as area
 circle_area = mu.area_of_circle(10) # or area(10)
 print(f"The value of PI is {mu.PI}")
 ```
+
 **Best Practice**: Prefer `import module` or `from module import name`. Avoid `from module import *`, as it pollutes the current namespace and makes it unclear where names are coming from.
 
 ### 3. `__name__` and the `__main__` block
+
 Every module has a special attribute called `__name__`.
+
 - If you run the Python file directly (e.g., `python my_module.py`), its `__name__` is set to the string `"__main__"`.
 - If you `import` the file into another module, its `__name__` is set to the module's file name (e.g., `"my_module"`).
 
@@ -66,15 +72,19 @@ if __name__ == "__main__":
     print("This script is being run directly.")
     some_function()
 ```
+
 If you import this file (`import my_script`), it will print "This line always runs. `__name__` is my_script", but the code inside the `if` block will not execute.
 
 ### 4. Other Module Attributes
+
 Modules have several other useful built-in attributes:
+
 - `__doc__`: The module's docstring (the first string literal at the top of the file).
 - `__file__`: The path to the file from which the module was loaded.
 - `__cached__`: The path to the compiled `.pyc` file.
 
 ### 5. Python's Import Cache
+
 When you import a module for the first time, Python executes the code in the file and caches the resulting module object in a dictionary called `sys.modules`. Subsequent imports of the same module are very fast because they just retrieve the object from the cache instead of re-running the file. This means that code at the top level of a module is only ever executed once per program run.
 
 ## 🔹 Quick Exercise
@@ -83,7 +93,7 @@ When you import a module for the first time, Python executes the code in the fil
 2.  In it, define a constant `PI = 3.14159` and a function `calculate_area(radius: float) -> float` that calculates the area of a circle.
 3.  Create a second file named `main.py`.
 4.  In `main.py`, import the `math_utils` module and use its `calculate_area` function to find the area of a circle with a radius of 5.
-5.  Add a `if __name__ == "__main__":` block to `math_utils.py` that prints a message like "This module provides math utilities." This message should *not* appear when you run `main.py`.
+5.  Add a `if __name__ == "__main__":` block to `math_utils.py` that prints a message like "This module provides math utilities." This message should _not_ appear when you run `main.py`.
 
 ```python
 # math_utils.py
@@ -112,6 +122,7 @@ if __name__ == "__main__":
 ```
 
 ## 📝 Daily Assignment
+
 **Goal**: Organize a small project into multiple modules.
 
 1.  **Create Project Files**: In your `my-first-poetry-app` project, create a directory `my_app` if it doesn't exist. Inside it, create three files:
@@ -119,23 +130,25 @@ if __name__ == "__main__":
     - `my_app/string_utils.py`
     - `my_app/math_utils.py`
 2.  **Populate Utility Modules**:
-    -   Move some of the string-related functions you wrote in previous assignments (like `is_palindrome`, `reverse_string`) into `string_utils.py`.
-    -   Move some of the math-related functions (like `is_prime`, `factorial`) into `math_utils.py`.
+    - Move some of the string-related functions you wrote in previous assignments (like `is_palindrome`, `reverse_string`) into `string_utils.py`.
+    - Move some of the math-related functions (like `is_prime`, `factorial`) into `math_utils.py`.
 3.  **Create the Main Script**:
-    -   In `main.py`, write a `main()` function that demonstrates functions from *both* utility modules.
-    -   Import the functions you need using `from .string_utils import ...` and `from .math_utils import ...`. (The leading dot `.` indicates a relative import from the same package, which we'll cover tomorrow).
-    -   Use an `if __name__ == "__main__":` block to call your `main()` function.
+    - In `main.py`, write a `main()` function that demonstrates functions from _both_ utility modules.
+    - Import the functions you need using `from .string_utils import ...` and `from .math_utils import ...`. (The leading dot `.` indicates a relative import from the same package, which we'll cover tomorrow).
+    - Use an `if __name__ == "__main__":` block to call your `main()` function.
 4.  **Run the Application**:
-    -   From your project's root directory, run your main script as a module using the `-m` flag: `poetry run python -m my_app.main`. The `-m` flag is important for making relative imports work correctly.
+    - From your project's root directory, run your main script as a module using the `-m` flag: `poetry run python -m my_app.main`. The `-m` flag is important for making relative imports work correctly.
 5.  **Verify**: Ensure the script runs, produces the correct output, and passes all linter and type checks.
 
 ## ⚠️ Common Mistakes
+
 - **Circular Imports**: Module A imports Module B, and Module B imports Module A. This will raise an `ImportError`. It's a sign that you need to restructure your code, perhaps by moving shared functionality to a third module.
 - **Name Clashes**: If you import `f` from `module1` and `f` from `module2`, the second import will overwrite the first. Use aliases to resolve this: `from module1 import f as f1` and `from module2 import f as f2`.
 - **Running a file with relative imports directly**: If `main.py` uses `from . import utils`, running `python main.py` will fail with an `ImportError`. You must run it as part of a package with `python -m my_package.main`.
 - **Side effects at the top level**: Code at the top level of a module (not inside a function) runs the first time the module is imported. Avoid expensive operations like network requests or file I/O at the top level. Put them inside functions.
 
 ## 📖 Further Reading
+
 - [Real Python: Python Modules and Packages](https://realpython.com/python-modules-packages/)
 - [Python Docs: The Module System](https://docs.python.org/3/tutorial/modules.html)
 - [PEP 338 -- Executing modules as scripts](https://peps.python.org/pep-0338/) (Explains the `-m` flag)

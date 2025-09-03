@@ -1,4 +1,5 @@
 # 🐍 Python Mastery Bootcamp
+
 ## From Zero to L3/L4 Google Engineer Level
 
 A comprehensive, modern Python course focusing on type safety, production-ready code, and human-AI collaboration.
@@ -8,6 +9,7 @@ A comprehensive, modern Python course focusing on type safety, production-ready 
 ## 📚 Course Overview
 
 This bootcamp transforms beginners into professional Python developers through:
+
 - **36 weeks** of structured learning
 - **Type-safe code** with MyPy --strict from day 1
 - **Modern tooling** with Poetry, Ruff, and pytest
@@ -53,44 +55,50 @@ poetry run ruff --version
 ```
 py-course/
 ├── PYTHON_COURSE.md     # Master course document
-├── CURRICULUM.md        # Detailed curriculum guide
 ├── CLAUDE.md           # AI assistant instructions
 │
-├── course/             # Course content (READ)
+├── course-book/             # Course content (READ)
 │   ├── 00-foundations/
 │   ├── 01-intermediate/
 │   ├── 02-advanced/
-│   └── 03-specialization/
+│   ├── 03-backend/
+│   ├── 04-ml-ai/
+│   └── bonus/
 │
-├── exercises/          # Your practice work (WRITE)
-├── projects/          # Major projects (WRITE)
-├── assessments/       # Self-evaluation
+├── exercises/         # Additional Exercises (READ)
+├── projects/          # Major projects (READ)
+├── assessments/       # Self-evaluation (READ)
+├── student/           # Place your files here (WRITE)
 └── resources/         # Reference materials
 ```
 
 ## 📈 Course Phases
 
 ### Phase 1: Foundations (Weeks 1-8)
+
 - Python basics with type hints
 - Data structures & algorithms
 - Functions & OOP basics
 - Testing & error handling
 
 ### Phase 2: Intermediate (Weeks 9-16)
+
 - Advanced OOP & functional programming
 - Async programming
 - Concurrency & parallelism
 - Databases & networking
 
 ### Phase 3: Advanced (Weeks 17-24)
+
 - Design patterns
 - System architecture
 - Security & DevOps
 - Performance optimization
 
-### Phase 4: Specialization (Weeks 25-36)
-- Track A: Backend Engineering (FastAPI, microservices)
-- Track B: Machine Learning (PyTorch, MLOps)
+### Phase 4: Backend Engineering (FastAPI, microservices)
+
+### Phase 5: Machine Learning (PyTorch, MLOps)
+
 - Integration & mastery
 
 ## 🎓 What You'll Build
@@ -123,6 +131,7 @@ py-course/
 ## ✅ Success Criteria
 
 By course completion, you will:
+
 - Write production-ready Python code
 - Understand type systems deeply
 - Build and deploy real applications
@@ -132,6 +141,7 @@ By course completion, you will:
 ## 🤝 Contributing
 
 This course is open source! Contributions welcome:
+
 - Report issues
 - Suggest improvements
 - Add exercises
@@ -150,10 +160,10 @@ This course is released under the MIT License. See LICENSE file for details.
 ## 🚦 Getting Started
 
 Ready to begin? Start with:
+
 1. Read `PYTHON_COURSE.md` for complete overview
-2. Review `CURRICULUM.md` for detailed syllabus
-3. Set up your environment (Week 0)
-4. Begin Week 1, Day 1!
+2. Set up your environment (Week 0)
+3. Begin Week 1, Day 1!
 
 ---
 
